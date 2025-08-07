@@ -8,7 +8,6 @@ import { Text, Button, Box } from "@radix-ui/themes";
 export default function Hero() {
   return (
     <section className="relative h-screen w-full">
-      {/* 背景图 */}
       <Image
         src="/images/hero-bg.jpg"
         alt="Hero Background"
@@ -17,10 +16,8 @@ export default function Hero() {
         priority
       />
 
-      {/* 黑色遮罩层 */}
       <div className="absolute inset-0 bg-black bg-opacity-40 z-10" />
 
-      {/* 内容层 */}
       <Box className="relative z-20 h-full flex flex-col items-center justify-center text-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
