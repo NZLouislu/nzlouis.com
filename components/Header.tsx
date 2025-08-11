@@ -12,11 +12,6 @@ export default function Header() {
     <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
       <div className="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          {/* Responsive rectangular logo:
-              - small: 64x28 (w-16 h-7)
-              - md: 128x40 (md:w-32 md:h-10)
-              - lg: 160x48 (lg:w-40 lg:h-12)
-              object-contain 保证按比例缩放，不会被拉伸 */}
           <Link href="#home" aria-label="Go to home" className="inline-block">
             <span className="sr-only">Nzlouis — Home</span>
             <div className="w-16 h-7 md:w-32 md:h-10 lg:w-32 lg:h-12">

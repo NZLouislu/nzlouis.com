@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "@radix-ui/themes";
 
 export default function Skills() {
   return (

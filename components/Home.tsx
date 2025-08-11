@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 const Home = () => {
   return (
@@ -20,21 +19,90 @@ const Home = () => {
         padding: "20px",
       }}
     >
-      <nav style={{ position: "absolute", top: "20px", width: "100%", display: "flex", justifyContent: "center" }}>
-        <ul style={{ listStyle: "none", display: "flex", gap: "20px", padding: 0 }}>
-          <li><a href="#home" style={{ color: "#D1D5DB", textDecoration: "none" }}>Home</a></li>
-          <li><a href="#about" style={{ color: "#D1D5DB", textDecoration: "none" }}>About</a></li>
-          <li><a href="#portfolio" style={{ color: "#D1D5DB", textDecoration: "none" }}>Portfolio</a></li>
-          <li><a href="#skills" style={{ color: "#D1D5DB", textDecoration: "none" }}>Skills</a></li>
-          <li><a href="#contact" style={{ color: "#D1D5DB", textDecoration: "none" }}>Contact</a></li>
-          <li><a href="#blog" style={{ color: "#D1D5DB", textDecoration: "none" }}>Blog</a></li>
+      <nav
+        style={{
+          position: "absolute",
+          top: "20px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <ul
+          style={{
+            listStyle: "none",
+            display: "flex",
+            gap: "20px",
+            padding: 0,
+          }}
+        >
+          <li>
+            <a
+              href="#home"
+              style={{ color: "#D1D5DB", textDecoration: "none" }}
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="#about"
+              style={{ color: "#D1D5DB", textDecoration: "none" }}
+            >
+              About
+            </a>
+          </li>
+          <li>
+            <a
+              href="#portfolio"
+              style={{ color: "#D1D5DB", textDecoration: "none" }}
+            >
+              Portfolio
+            </a>
+          </li>
+          <li>
+            <a
+              href="#skills"
+              style={{ color: "#D1D5DB", textDecoration: "none" }}
+            >
+              Skills
+            </a>
+          </li>
+          <li>
+            <a
+              href="#contact"
+              style={{ color: "#D1D5DB", textDecoration: "none" }}
+            >
+              Contact
+            </a>
+          </li>
+          <li>
+            <a
+              href="#blog"
+              style={{ color: "#D1D5DB", textDecoration: "none" }}
+            >
+              Blog
+            </a>
+          </li>
         </ul>
       </nav>
-      <div style={{ textAlign: "center", padding: "20px", background: "rgba(255, 255, 255, 0.1)", borderRadius: "10px" }}>
-        <h1 style={{ color: "#60A5FA", fontSize: "3rem", margin: "0" }}>Hi, I'm Louis Lu</h1>
-        <h2 style={{ color: "#FFFFFF", fontSize: "1.5rem", margin: "10px 0" }}>Full Stack Software Engineer</h2>
+      <div
+        style={{
+          textAlign: "center",
+          padding: "20px",
+          background: "rgba(255, 255, 255, 0.1)",
+          borderRadius: "10px",
+        }}
+      >
+        <h1 style={{ color: "#60A5FA", fontSize: "3rem", margin: "0" }}>
+          Hi, I&apos;m Louis Lu
+        </h1>
+        <h2 style={{ color: "#FFFFFF", fontSize: "1.5rem", margin: "10px 0" }}>
+          Full Stack Software Engineer
+        </h2>
         <p style={{ color: "#D1D5DB", maxWidth: "600px", margin: "10px auto" }}>
-          Specializing in AI/ML and scalable systems with proven expertise in React and Node.js.
+          Specializing in AI/ML and scalable systems with proven expertise in
+          React and Node.js.
         </p>
         <button
           style={{
