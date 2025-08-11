@@ -5,8 +5,8 @@ import Portfolio from "../components/Portfolio";
 import Skills from "../components/Skills";
 import Contact from "../components/Contact";
 import Blog from "../components/Blog";
-import Hero from "@/components/Hero";
-import Footer from "@/components/Footer";
+import Hero from "../components/Home";
+import Footer from "../components/Footers";
 
 export default function Page() {
   return (
