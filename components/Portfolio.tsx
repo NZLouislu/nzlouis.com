@@ -90,7 +90,13 @@ export default function Portfolio() {
             ))}
           </ul>
 
-          <Text mt="5" as="p" size="1" className="text-xs text-slate-500 mt-4">
+          <Text
+            mt="5"
+            mb="5"
+            as="p"
+            size="1"
+            className="text-xs text-slate-500 mt-4"
+          >
             Shipping with tests, telemetry, and rollout strategies (A/B &
             canary). p95 latency targets and budget caps respected.
           </Text>

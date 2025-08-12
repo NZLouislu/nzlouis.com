@@ -10,7 +10,7 @@ export default function Hero() {
 
       <div className="relative max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
         <div className="w-full max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium mb-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-base font-medium mb-5">
             Full-stack Developer · AI Engineer
             <span className="mx-1 text-slate-300">•</span>
             Hugging Face in production
@@ -21,7 +21,8 @@ export default function Hero() {
             as="h1"
             size={{ initial: "7", md: "9" }}
             weight="bold"
-            className="tracking-tight leading-tight text-pretty mb-4"
+            className="tracking-tight text-pretty mb-4"
+            style={{ lineHeight: "1.3" }}
           >
             I build AI-powered systems for real-world impact
           </Heading>
