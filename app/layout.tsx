@@ -11,7 +11,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {/* 可定制 Theme：accentColor 可选 'indigo' 'purple' 'cyan' 等 */}
         <Theme accentColor="purple" grayColor="auto" radius="large" scaling="100%">
           {children}
         </Theme>

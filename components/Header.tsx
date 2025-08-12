@@ -53,7 +53,7 @@ export default function Header() {
             <span className="sr-only">Nzlouis — Home</span>
             <div className="w-[100px] h-[30px]">
               <Image
-                src="/images/nzlouis.jpg"
+                src="/images/nzlouis-logo.png"
                 alt="Nzlouis logo — Lu Louis"
                 width={100}
                 height={30}
