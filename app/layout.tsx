@@ -3,7 +3,7 @@ import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 
 export const metadata = {
-  title: "Lu Louis — AI Engineer",
+  title: "Louis Lu — AI Engineer",
   description: "Full-stack + ML engineer — Hugging Face in production",
 };
 

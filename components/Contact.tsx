@@ -1,85 +1,112 @@
+"use client";
+
 import React from "react";
+import { Heading, Text } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default function Contact() {
   return (
-    <section id="contact">
+    <section id="contact" aria-labelledby="contact-title">
       <div className="max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
         <div className="w-full max-w-4xl bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl px-8 py-12 shadow">
-          <h2
+          <Heading
             id="contact-title"
-            className="mt-2 text-2xl md:text-3xl font-semibold"
+            as="h2"
+            mb="5"
+            size={{ initial: "6", md: "7" }}
+            weight="bold"
           >
             Contact Me
-          </h2>
+          </Heading>
 
-          <p className="mt-4 mb-6 text-blue-50">
+          <Text
+            as="p"
+            mt="4"
+            className="mt-4 mb-6 text-blue-50 font-semibold"
+            size="3"
+          >
             Open to remote roles based in the US or Australia as AI Engineer /
             ML Engineer / Full‑Stack.
-          </p>
-          <p className="mt-2 mb-6 text-blue-50">
+          </Text>
+
+          <Text
+            as="p"
+            mt="4"
+            mb="5"
+            className=" text-blue-50 font-semibold"
+            size="3"
+          >
             Based in New Zealand with proven flexibility across US and AU
             business hours.
-          </p>
+          </Text>
 
           {/* Email CTA */}
           <div className="flex justify-center">
-            <a
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-blue-700 font-medium hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-700 transition shadow-sm"
+            <Link
               href="mailto:nzlouis.com@gmail.com?subject=Hi%20Louis%2C%20let%E2%80%99s%20talk"
               aria-label="Email Louis Lu"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-blue-700 font-medium hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-700 transition shadow-sm"
             >
               <MailIcon className="h-5 w-5" />
-              <span>nzlouis.com@gmail.com</span>
-            </a>
+              <Text as="span" size="3" weight="medium">
+                nzlouis.com@gmail.com
+              </Text>
+            </Link>
           </div>
+
+          <Text as="p" size="2" mt="5" className="text-blue-100">
+            Preferred contact: Email or LinkedIn.
+          </Text>
 
           {/* Social / links row */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <a
+            <Link
               href="https://www.linkedin.com/in/ailouis"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn - Louis Lu"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
               title="LinkedIn"
+              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
             >
               <LinkedInIcon className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
-            </a>
-            <a
+            </Link>
+
+            <Link
               href="https://github.com/ailouislu"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub - Louis Lu"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
               title="GitHub"
+              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
             >
               <GitHubIcon className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
-            </a>
-            
-            <a
+            </Link>
+
+            <Link
               href="https://blog.nzlouis.com"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Blog - Louis Lu"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
               title="Blog"
+              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
             >
               <BlogBIcon className="h-5 w-5" />
               <span className="sr-only">Blog</span>
-            </a>
-            <a
+            </Link>
+
+            <Link
               href="https://nzlouis.com"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Website - nzlouis.com"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
               title="Website"
+              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
             >
               <GlobeIcon className="h-5 w-5" />
               <span className="sr-only">Website</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -87,8 +114,8 @@ export default function Contact() {
   );
 }
 
-/* ——— Icons ——— */
-function MailIcon({ className = "" }: { className?: string }) {
+/* ——— Inline Icons ——— */
+function MailIcon({ className = "" }) {
   return (
     <svg
       className={className}
@@ -112,7 +139,7 @@ function MailIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function GitHubIcon({ className = "" }: { className?: string }) {
+function GitHubIcon({ className = "" }) {
   return (
     <svg
       className={className}
@@ -125,7 +152,7 @@ function GitHubIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function LinkedInIcon({ className = "" }: { className?: string }) {
+function LinkedInIcon({ className = "" }) {
   return (
     <svg
       className={className}
@@ -138,7 +165,7 @@ function LinkedInIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function GlobeIcon({ className = "" }: { className?: string }) {
+function GlobeIcon({ className = "" }) {
   return (
     <svg
       className={className}
@@ -157,7 +184,7 @@ function GlobeIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function BlogBIcon({ className = "" }: { className?: string }) {
+function BlogBIcon({ className = "" }) {
   return (
     <svg
       className={className}
