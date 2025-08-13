@@ -74,7 +74,7 @@ export default function About() {
                 Louis Lu
               </Heading>
               <Text as="p" size="3" className="text-slate-600 mt-1">
-                Full‑Stack Developer & AI Engineer
+                Full‑Stack Developer & AI / ML Engineer
               </Text>
               <div className="mt-4 flex flex-wrap gap-2 justify-center">
                 {[
