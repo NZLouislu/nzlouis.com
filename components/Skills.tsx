@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Skills() {
   return (
-    <section id="skills" className="bg-purple-50">
+    <section id="skills" className="bg-blue-50">
       <div className="max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
         <h3 className="text-2xl md:text-3xl font-semibold tracking-tight mb-6">
           Skills
