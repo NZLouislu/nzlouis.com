@@ -28,7 +28,7 @@ export default function About() {
             weight="bold"
             className="mt-3 tracking-tight text-slate-900"
           >
-            Hi, I’m Louis Lu
+            Hi, I’m Louis Lu — NZLouis is my personal brand
           </Heading>
 
           <Text as="p" size="3" className="mt-3 text-slate-700 leading-relaxed">

@@ -25,8 +25,8 @@ export default function Contact() {
             className="mt-4 mb-6 text-blue-50 font-semibold"
             size="3"
           >
-            Open to remote roles based in the US or Australia as AI Engineer /
-            ML Engineer / Full‑Stack.
+            Open to remote roles in the US or Australia as an AI / ML /
+            Full-Stack Engineer.
           </Text>
 
           <Text
@@ -36,8 +36,8 @@ export default function Contact() {
             className=" text-blue-50 font-semibold"
             size="3"
           >
-            Based in New Zealand with proven flexibility across US and AU
-            business hours.
+            Proven ability to align seamlessly with US and AU business hours
+            from New Zealand.
           </Text>
 
           {/* Email CTA */}

@@ -11,9 +11,7 @@ export default function Hero() {
       <div className="relative max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
         <div className="w-full max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-base font-medium mb-5">
-            Full-stack Developer · AI Engineer
-            <span className="mx-1 text-slate-300">•</span>
-            Hugging Face in production
+            NZLouis · Personal brand of Louis Lu
           </div>
 
           <Heading
@@ -26,6 +24,11 @@ export default function Hero() {
           >
             I build AI-powered systems for real-world impact
           </Heading>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-base font-medium mb-5">
+            Full-stack Developer · AI Engineer
+            <span className="mx-1 text-slate-300">•</span>
+            Hugging Face in production
+          </div>
 
           <Text
             mb="5"
@@ -42,16 +45,16 @@ export default function Hero() {
           <div className="flex flex-wrap gap-3 justify-center mb-10">
             <Link
               className="px-5 py-3 rounded-lg bg-blue-700 text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              href="mailto:contact@nzlouis.com"
-              aria-label="Email Louis to discuss a role"
+              href="#portfolio"
+              aria-label="portfolio"
             >
-              Email me
+              View portfolio
             </Link>
             <Link
               className="px-5 py-3 rounded-lg border border-slate-200 text-blue-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              href="#portfolio"
+              href="#about"
             >
-              View portfolio
+              About me
             </Link>
           </div>
         </div>
