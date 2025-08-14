@@ -24,6 +24,17 @@ export default function About() {
             >
               ABOUT ME
             </Heading>
+            <Heading
+              as="h3"
+              size={{ initial: "7", md: "8" }}
+              weight="bold"
+              align="center"
+              mb="6"
+              className="text-slate-900"
+            >
+              Hi, I’m Louis Lu – NZLouis is my personal brand
+            </Heading>
+
             <Box
               style={{
                 maxWidth: 860,
