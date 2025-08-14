@@ -9,9 +9,7 @@ export default function Blog() {
         target="_blank"
         rel="noopener noreferrer"
         size="2"
-      >
-        Read my blog → blog.nzlouis.com
-      </RadixLink>
+      ></RadixLink>
     </div>
   );
 }

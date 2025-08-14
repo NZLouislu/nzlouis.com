@@ -1,119 +1,174 @@
-import { Card, Heading, Text } from "@radix-ui/themes";
+"use client";
+
+import React from "react";
+import { Card, Inset, Text, Heading, Flex, Box, Badge } from "@radix-ui/themes";
+import Link from "next/link";
+import Image from "next/image";
 
 const projects = [
   {
-    title: "AI Resume Assistant",
-    desc: "End-to-end transformer deploy with FastAPI, Docker, and a clean frontend. Implemented CI/CD, usage analytics, and cost-aware inference.",
-    stack: "Python · FastAPI · Hugging Face · Docker · Postgres",
+    title: "Cognitiv Website",
+    desc: "Corporate site built with React, styled-components, and API integration.",
+    stack: ["React", "Styled-Components", "API"],
+    img: "/portfolio/team.jpg",
+    link: "https://cognitiv.co.nz",
   },
   {
-    title: "Image Classifier for Diagnostics",
-    desc: "Training pipeline for medical images with augmentation, validation, and automated retraining hooks.",
-    stack: "PyTorch · MLflow · Kubernetes · AWS S3",
+    title: "Online Books System",
+    desc: "Implemented using React and react-bootstrap. Contains functions such as books and authors.",
+    stack: ["React", "Bootstrap", "Node.js"],
+    img: "/portfolio/books.jpg",
+    link: "https://books.nzlouis.com",
   },
   {
-    title: "E-commerce Platform (Full-stack)",
-    desc: "Frontend + backend + realtime features; integrated payments and search ranking using lightweight ML features.",
-    stack: "Next.js · Node.js · Postgres · Redis",
+    title: "Folio Insurance System",
+    desc: "Secure online insurance platform with user dashboards and payment integration.",
+    stack: ["React", "Next.js", "Stripe API"],
+    img: "/portfolio/folio.jpg",
+    link: "/https://www.folio.insure",
   },
   {
-    title: "MLOps Pipeline",
-    desc: "Reproducible pipelines with monitoring, drift detection, and scheduled retraining for production models.",
-    stack: "Airflow · Docker · Prometheus · Grafana",
+    title: "Peer Evaluation System",
+    desc: "Evaluate peers online with scoring standards, reports, and data analysis.",
+    stack: ["React", "Express", "MongoDB"],
+    img: "/portfolio/peer.jpg",
+    link: "https://peer.nzlouis.com",
+  },
+  {
+    title: "Tenei Job Hunting for Maori",
+    desc: "Platform connecting Maori job seekers with employers, highlighting skills.",
+    stack: ["React", "Node.js", "Postgres"],
+    img: "/portfolio/tenei.jpg",
+    link: "https://example.com/tenei",
+  },
+  {
+    title: ".NET System: Online Event Registration",
+    desc: "Online registration system for events with email notifications.",
+    stack: [".NET", "C#", "SQL Server"],
+    img: "/portfolio/online.jpg",
+    link: "https://example.com/event",
+  },
+  {
+    title: "Louis' Blog",
+    desc: "Personal blog to share thoughts and projects.",
+    stack: ["Next.js", "Markdown", "Vercel"],
+    img: "/portfolio/blog.jpg",
+    link: "https://blog.nzlouis.com",
+  },
+  {
+    title: "Internet Financial Analysis System",
+    desc: "Financial market analysis with charts, predictions, and reports.",
+    stack: ["Python", "Django", "ECharts"],
+    img: "/portfolio/ibank.jpg",
+    link: "https://example.com/finance",
+  },
+  {
+    title: "OpenAPI System",
+    desc: "API service with Swagger documentation and authentication.",
+    stack: ["Node.js", "Express", "OpenAPI"],
+    img: "/portfolio/openapi.jpg",
+    link: "https://openapi.nzlouis.com",
   },
 ];
 
+function getColumnCount(width: number) {
+  if (width >= 1024) return 3;
+  if (width >= 768) return 2;
+  return 1;
+}
+
 export default function Portfolio() {
+  const [cols, setCols] = React.useState(1);
+
+  React.useEffect(() => {
+    const update = () => setCols(getColumnCount(window.innerWidth));
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   return (
-    <section id="portfolio">
-      <div className="max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
-        <h3 className="text-2xl md:text-3xl font-semibold tracking-tight mb-6">
-          Portfolio — selected projects
-        </h3>
+    <Box id="portfolio" px="5" py="8" style={{ width: "100%" }}>
+      <Heading
+        size="6"
+        weight="bold"
+        align="center"
+        mb="6"
+        style={{ color: "blue" }}
+      >
+        PORTFOLIO
+      </Heading>
 
-        <div className="w-full max-w-4xl">
-          <Heading
-            mb="5"
-            as="h2"
-            size="2"
-            weight="medium"
-            className="text-sm uppercase tracking-wider text-slate-500 mb-3"
-          >
-            Industry use cases
-          </Heading>
-
-          <ul className="grid gap-5 sm:grid-cols-2">
-            {[
-              {
-                title: "Real estate",
-                desc: "Semantic property search and recommendations with embeddings; normalize listings and extract key attributes.",
-                models:
-                  "Sentence-Transformers, T5/FLAN for cleaning & summarization",
-                stack: "FAISS/Vector DB, FastAPI",
-              },
-              {
-                title: "Banking",
-                desc: "RAG over statements/agreements; classify intents and redact PII; improve agent response quality.",
-                models:
-                  "BERT/RoBERTa classifiers, token-classification for PII, rerankers",
-                stack: "Vector search, policy guards, observability",
-              },
-              {
-                title: "Insurance",
-                desc: "Claims triage from forms and photos; summarize adjuster notes; detect potential fraud patterns.",
-                models: "LayoutLM for documents, Whisper+summarizers for calls",
-                stack: "Async pipelines, monitoring, cost controls",
-              },
-              {
-                title: "Equities",
-                desc: "News/filings sentiment and entity extraction; RAG research copilots with auditable sources.",
-                models: "FinBERT/sentiment, NER extractors, rerankers",
-                stack: "ETL to vector DB, latency-aware serving",
-              },
-            ].map((item, i) => (
-              <Card
-                key={i}
-                className="p-4 border border-slate-200 rounded-lg bg-white/60"
-              >
-                <Text as="div" className="font-semibold text-slate-900">
-                  {item.title}
-                </Text>
-                <Text as="p" size="2" className="text-slate-700 mt-1">
-                  {item.desc}
-                </Text>
-                <Text as="div" size="1" className="text-slate-600 mt-2">
-                  <strong className="font-medium">Models:</strong> {item.models}
-                  <span className="mx-1">·</span>
-                  <strong className="font-medium">Stack:</strong> {item.stack}
-                </Text>
-              </Card>
-            ))}
-          </ul>
-
-          <Text
-            mt="5"
-            mb="5"
-            as="p"
-            size="1"
-            className="text-xs text-slate-500 mt-4"
-          >
-            Shipping with tests, telemetry, and rollout strategies (A/B &
-            canary). p95 latency targets and budget caps respected.
-          </Text>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6 w-full max-w-4xl">
+      <Box
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+        }}
+      >
+        <Box
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+            gap: "20px",
+            alignItems: "stretch",
+          }}
+        >
           {projects.map((p) => (
-            <Card key={p.title} className="p-6">
-              <h4 className="font-bold text-lg">{p.title}</h4>
-              <p className="mt-2 text-slate-700">{p.desc}</p>
-              <div className="mt-3 text-sm text-slate-600">
-                <strong className="font-medium">Stack:</strong> {p.stack}
-              </div>
+            <Card
+              key={p.title}
+              style={{
+                overflow: "hidden",
+                cursor: "pointer",
+                transition: "transform 0.2s ease, boxShadow 0.2s ease",
+                height: "100%",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-4px)";
+                e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <Inset clip="padding-box">
+                <Link href={p.link} target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src={p.img}
+                    alt={p.title}
+                    width={800}
+                    height={660}
+                    style={{
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "220px",
+                      display: "block",
+                    }}
+                  />
+                </Link>
+              </Inset>
+
+              <Box p="3">
+                <Heading mt="3" size="3" weight="bold" mb="2">
+                  {p.title}
+                </Heading>
+
+                <Text as="p" size="2" color="gray">
+                  {p.desc}
+                </Text>
+
+                <Flex gap="2" mt="3" wrap="wrap">
+                  {p.stack.map((tech) => (
+                    <Badge key={tech} color="blue" variant="soft" size="1">
+                      {tech}
+                    </Badge>
+                  ))}
+                </Flex>
+              </Box>
             </Card>
           ))}
-        </div>
-      </div>
-    </section>
+        </Box>
+      </Box>
+    </Box>
   );
 }

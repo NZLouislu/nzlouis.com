@@ -2,14 +2,7 @@
 
 import React from "react";
 import { Box, Card, Heading, Text, Flex } from "@radix-ui/themes";
-import {
-  Cpu,
-  Server,
-  Layout,
-  Cloud,
-  Database,
-  Users,
-} from "lucide-react";
+import { Cpu, Server, Layout, Cloud, Database, Users } from "lucide-react";
 
 export default function Skills() {
   const skillsData = [
@@ -39,8 +32,7 @@ export default function Skills() {
     },
     {
       title: "Databases & Infrastructure",
-      content:
-        "MySQL, DynamoDB, MongoDB, Redis, Oracle, SQL Server, Supabase",
+      content: "MySQL, DynamoDB, MongoDB, Redis, Oracle, SQL Server, Supabase",
       icon: Database,
     },
     {
@@ -63,6 +55,7 @@ export default function Skills() {
           size={{ initial: "6", md: "7" }}
           weight="bold"
           mb="6"
+          style={{ color: "blue" }}
           className="tracking-tight"
         >
           Skills
@@ -78,10 +71,9 @@ export default function Skills() {
             const Icon = skill.icon;
             return (
               <Card
-                key={index}
+                key={skill.title}
                 variant="surface"
-                className="flex-1 min-w-[280px] max-w-[380px] rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white/90 backdrop-blur-sm"
-                p="4"
+                className="flex-1 min-w-[280px] max-w-[380px] rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white/90 backdrop-blur-sm p-4"
               >
                 <Flex align="center" gap="3" mb="3">
                   <Box className="p-2 bg-blue-100 rounded-lg">

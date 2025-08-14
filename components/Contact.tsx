@@ -1,124 +1,191 @@
 "use client";
 
-import React from "react";
-import { Heading, Text } from "@radix-ui/themes";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Button,
+  Container,
+  VisuallyHidden,
+} from "@radix-ui/themes";
 import Link from "next/link";
+import React from "react";
 
 export default function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title">
-      <div className="max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
-        <div className="w-full max-w-4xl bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl px-8 py-12 shadow">
-          <Heading
-            id="contact-title"
-            as="h2"
-            mb="5"
-            size={{ initial: "6", md: "7" }}
-            weight="bold"
+    <Box id="contact" aria-labelledby="contact-title">
+      <Container size="4" px="6" py={{ initial: "6", md: "8" }}>
+        <Flex direction="column" align="center">
+          <Box
+            width="100%"
+            maxWidth="960px"
+            p={{ initial: "5", md: "7" }}
+            style={{
+              backgroundColor: "#1554F3",
+              color: "white",
+              borderRadius: "16px",
+              boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
+              textAlign: "center",
+            }}
           >
-            Contact Me
-          </Heading>
-
-          <Text
-            as="p"
-            mt="4"
-            className="mt-4 mb-6 text-blue-50 font-semibold"
-            size="3"
-          >
-            Open to remote roles in the US or Australia as an AI / ML /
-            Full-Stack Engineer.
-          </Text>
-
-          <Text
-            as="p"
-            mt="4"
-            mb="5"
-            className=" text-blue-50 font-semibold"
-            size="3"
-          >
-            Proven ability to align seamlessly with US and AU business hours
-            from New Zealand.
-          </Text>
-
-          {/* Email CTA */}
-          <div className="flex justify-center">
-            <Link
-              href="mailto:nzlouis.com@gmail.com?subject=Hi%20Louis%2C%20let%E2%80%99s%20talk"
-              aria-label="Email Louis Lu"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-blue-700 font-medium hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-700 transition shadow-sm"
+            <Heading
+              id="contact-title"
+              as="h2"
+              size={{ initial: "6", md: "7" }}
+              weight="bold"
+              mb="6"
             >
-              <MailIcon className="h-5 w-5" />
-              <Text as="span" size="3" weight="medium">
-                nzlouis.com@gmail.com
-              </Text>
-            </Link>
-          </div>
+              Contact Me
+            </Heading>
 
-          <Text as="p" size="2" mt="5" className="text-blue-100">
-            Preferred contact: Email or LinkedIn.
-          </Text>
-
-          {/* Social / links row */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="https://www.linkedin.com/in/ailouis"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn - Louis Lu"
-              title="LinkedIn"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
+            <Text
+              as="p"
+              size="3"
+              weight="bold"
+              mb="3"
+              style={{ color: "rgba(255,255,255,0.95)" }}
             >
-              <LinkedInIcon className="h-5 w-5" />
-              <span className="sr-only">LinkedIn</span>
-            </Link>
+              Open to remote roles in the US or Australia as an AI / ML /
+              Full-Stack Engineer.
+            </Text>
 
-            <Link
-              href="https://github.com/ailouislu"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub - Louis Lu"
-              title="GitHub"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
+            <Text
+              as="p"
+              size="3"
+              weight="bold"
+              mb="5"
+              style={{ color: "rgba(255,255,255,0.9)" }}
             >
-              <GitHubIcon className="h-5 w-5" />
-              <span className="sr-only">GitHub</span>
-            </Link>
+              Proven ability to align seamlessly with US and AU business hours
+              from New Zealand.
+            </Text>
 
-            <Link
-              href="https://blog.nzlouis.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Blog - Louis Lu"
-              title="Blog"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
-            >
-              <BlogBIcon className="h-5 w-5" />
-              <span className="sr-only">Blog</span>
-            </Link>
+            <Flex justify="center" mb="4">
+              <Button
+                asChild
+                size="3"
+                style={{ backgroundColor: "white", color: "var(--blue-11)" }}
+              >
+                <Link
+                  href="mailto:nzlouis.com@gmail.com?subject=Hi%20Louis%2C%20let%E2%80%99s%20talk"
+                  aria-label="Email Louis Lu"
+                >
+                  <MailIcon style={{ width: 20, height: 20 }} />
+                  <Text as="span" size="3" weight="medium">
+                    nzlouis.com@gmail.com
+                  </Text>
+                </Link>
+              </Button>
+            </Flex>
 
-            <Link
-              href="https://nzlouis.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Website - nzlouis.com"
-              title="Website"
-              className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
-            >
-              <GlobeIcon className="h-5 w-5" />
-              <span className="sr-only">Website</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
+            <Text as="p" size="2" style={{ color: "rgba(255,255,255,0.8)" }}>
+              Preferred contact: Email or LinkedIn.
+            </Text>
+
+            <Flex mt="5" gap="3" justify="center" wrap="wrap">
+              <Button
+                asChild
+                size="2"
+                variant="soft"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.12)",
+                  color: "white",
+                }}
+              >
+                <Link
+                  href="https://www.linkedin.com/in/ailouis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn - Louis Lu"
+                  title="LinkedIn"
+                >
+                  <LinkedInIcon style={{ width: 20, height: 20 }} />
+                  <VisuallyHidden>LinkedIn</VisuallyHidden>
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="2"
+                variant="soft"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.12)",
+                  color: "white",
+                }}
+              >
+                <Link
+                  href="https://github.com/ailouislu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub - Louis Lu"
+                  title="GitHub"
+                >
+                  <GitHubIcon style={{ width: 20, height: 20 }} />
+                  <VisuallyHidden>GitHub</VisuallyHidden>
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="2"
+                variant="soft"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.12)",
+                  color: "white",
+                }}
+              >
+                <Link
+                  href="https://blog.nzlouis.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Blog - Louis Lu"
+                  title="Blog"
+                >
+                  <BlogBIcon style={{ width: 20, height: 20 }} />
+                  <VisuallyHidden>Blog</VisuallyHidden>
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="2"
+                variant="soft"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.12)",
+                  color: "white",
+                }}
+              >
+                <Link
+                  href="https://nzlouis.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Website - nzlouis.com"
+                  title="Website"
+                >
+                  <GlobeIcon style={{ width: 20, height: 20 }} />
+                  <VisuallyHidden>Website</VisuallyHidden>
+                </Link>
+              </Button>
+            </Flex>
+          </Box>
+        </Flex>
+      </Container>
+    </Box>
   );
 }
 
-/* ——— Inline Icons ——— */
-function MailIcon({ className = "" }) {
+function MailIcon({
+  className = "",
+  style = {},
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
@@ -139,10 +206,17 @@ function MailIcon({ className = "" }) {
   );
 }
 
-function GitHubIcon({ className = "" }) {
+function GitHubIcon({
+  className = "",
+  style = {},
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -152,10 +226,17 @@ function GitHubIcon({ className = "" }) {
   );
 }
 
-function LinkedInIcon({ className = "" }) {
+function LinkedInIcon({
+  className = "",
+  style = {},
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -165,10 +246,17 @@ function LinkedInIcon({ className = "" }) {
   );
 }
 
-function GlobeIcon({ className = "" }) {
+function GlobeIcon({
+  className = "",
+  style = {},
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
@@ -184,10 +272,17 @@ function GlobeIcon({ className = "" }) {
   );
 }
 
-function BlogBIcon({ className = "" }) {
+function BlogBIcon({
+  className = "",
+  style = {},
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"

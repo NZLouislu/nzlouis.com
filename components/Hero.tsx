@@ -1,64 +1,105 @@
 "use client";
 
-import { Heading, Text } from "@radix-ui/themes";
+import { Box, Flex, Heading, Text, Button, Container } from "@radix-ui/themes";
 import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section id="home" className="relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white pointer-events-none" />
-
-      <div className="relative max-w-screen-xl mx-auto px-6 py-16 md:py-20 flex flex-col items-center text-center">
-        <div className="w-full max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-base font-medium mb-5">
-            NZLouis · Personal brand of Louis Lu
-          </div>
-
-          <Heading
-            mb="6"
-            as="h1"
-            size={{ initial: "7", md: "9" }}
-            weight="bold"
-            className="tracking-tight text-pretty mb-4"
-            style={{ lineHeight: "1.3" }}
-          >
-            I build AI-powered systems for real-world impact
-          </Heading>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-base font-medium mb-5">
-            Full-stack Developer · AI Engineer
-            <span className="mx-1 text-slate-300">•</span>
-            Hugging Face in production
-          </div>
-
-          <Text
-            mb="5"
-            mt="3"
-            as="p"
-            size="3"
-            className="text-slate-700 leading-relaxed mb-6"
-          >
-            End-to-end AI systems built with Hugging Face, RAG, and vector
-            search. Delivered through full-stack pipelines using FastAPI,
-            Docker, observability, and scalable architecture.
-          </Text>
-
-          <div className="flex flex-wrap gap-3 justify-center mb-10">
-            <Link
-              className="px-5 py-3 rounded-lg bg-blue-700 text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              href="#portfolio"
-              aria-label="portfolio"
+    <Box id="home" position="relative">
+      <Container
+        size="4"
+        position="relative"
+        px="6"
+        py={{ initial: "6", md: "8" }}
+      >
+        <Flex
+          direction="column"
+          align="center"
+          gap="5"
+          style={{ textAlign: "center" }}
+        >
+          <Box width="100%" maxWidth="800px">
+            <Flex
+              align="center"
+              justify="center"
+              gap="2"
+              px="3"
+              py="1"
+              mb="4"
+              style={{
+                borderRadius: "9999px",
+                backgroundColor: "transparent",
+                color: "#1554F3",
+                fontSize: "1rem",
+                fontWeight: 500,
+              }}
             >
-              View portfolio
-            </Link>
-            <Link
-              className="px-5 py-3 rounded-lg border border-slate-200 text-blue-700 hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              href="#about"
+              NZLouis · Personal brand of Louis Lu
+            </Flex>
+            <Heading
+              as="h1"
+              size={{ initial: "7", md: "9" }}
+              weight="bold"
+              mb="4"
+              className="tracking-tight text-pretty"
+              style={{ lineHeight: 1.3 }}
             >
-              About me
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
+              I build AI-powered systems for real-world impact
+            </Heading>
+            <Flex
+              align="center"
+              justify="center"
+              gap="2"
+              px="3"
+              py="1"
+              mb="4"
+              style={{
+                borderRadius: "9999px",
+                backgroundColor: "transparent",
+                color: "#1554F3",
+                fontSize: "1rem",
+                fontWeight: 500,
+              }}
+            >
+              Full-stack Developer · AI Engineer
+              <Text aria-hidden="true" style={{ opacity: 0.5 }}>
+                •
+              </Text>
+              Hugging Face in production
+            </Flex>
+            <Text as="p" size="3" mb="6" style={{ lineHeight: 1.6 }}>
+              End-to-end AI systems built with Hugging Face, RAG, and vector
+              search. Delivered through full-stack pipelines using FastAPI,
+              Docker, observability, and scalable architecture.
+            </Text>
+            <Flex justify="center" wrap="wrap" gap="3" mb="6">
+              <Button
+                asChild
+                size="3"
+                style={{
+                  backgroundColor: "#1554F3",
+                  color: "white",
+                }}
+              >
+                <Link href="#portfolio" aria-label="portfolio">
+                  View portfolio
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="3"
+                style={{
+                  border: "1px solid #3B82F6",
+                  color: "#3B82F6",
+                  backgroundColor: "transparent",
+                }}
+              >
+                <Link href="#about">About me</Link>
+              </Button>
+            </Flex>
+          </Box>
+        </Flex>
+      </Container>
+    </Box>
   );
 }
