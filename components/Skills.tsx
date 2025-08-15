@@ -67,7 +67,7 @@ export default function Skills() {
           justify="center"
           className="max-w-6xl mx-auto"
         >
-          {skillsData.map((skill, index) => {
+          {skillsData.map((skill) => {
             const Icon = skill.icon;
             return (
               <Card

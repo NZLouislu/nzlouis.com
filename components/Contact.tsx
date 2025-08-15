@@ -11,8 +11,11 @@ import {
 } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
+import { useChat } from "@/app/ChatProvider";
 
 export default function Contact() {
+  const { openChat } = useChat();
+
   return (
     <Box id="contact" aria-labelledby="contact-title">
       <Container size="4" px="6" py={{ initial: "6", md: "8" }}>
@@ -61,7 +64,7 @@ export default function Contact() {
               from New Zealand.
             </Text>
 
-            <Flex justify="center" mb="4">
+            <Flex justify="center" gap="3" mb="4" wrap="wrap">
               <Button
                 asChild
                 size="3"
@@ -72,15 +75,38 @@ export default function Contact() {
                   aria-label="Email Louis Lu"
                 >
                   <MailIcon style={{ width: 20, height: 20 }} />
-                  <Text as="span" size="3" weight="medium">
+                  <Text
+                    as="span"
+                    size="3"
+                    weight="medium"
+                    style={{ marginLeft: 8 }}
+                  >
                     nzlouis.com@gmail.com
                   </Text>
                 </Link>
               </Button>
+
+              <Button
+                size="3"
+                onClick={openChat}
+                style={{ backgroundColor: "white", color: "var(--blue-11)" }}
+                aria-label="Chat with me"
+                title="Chat with me"
+              >
+                <CIcon style={{ width: 20, height: 20 }} />
+                <Text
+                  as="span"
+                  size="3"
+                  weight="medium"
+                  style={{ marginLeft: 8 }}
+                >
+                  Chat with me
+                </Text>
+              </Button>
             </Flex>
 
             <Text as="p" size="2" style={{ color: "rgba(255,255,255,0.8)" }}>
-              Preferred contact: Email or LinkedIn.
+              Preferred contact: Email, LinkedIn or Chat with me.
             </Text>
 
             <Flex mt="5" gap="3" justify="center" wrap="wrap">
@@ -148,24 +174,18 @@ export default function Contact() {
               </Button>
 
               <Button
-                asChild
                 size="2"
                 variant="soft"
                 style={{
                   backgroundColor: "rgba(255,255,255,0.12)",
                   color: "white",
                 }}
+                onClick={openChat}
+                aria-label="Chatbot"
+                title="Chatbot"
               >
-                <Link
-                  href="https://nzlouis.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Website - nzlouis.com"
-                  title="Website"
-                >
-                  <GlobeIcon style={{ width: 20, height: 20 }} />
-                  <VisuallyHidden>Website</VisuallyHidden>
-                </Link>
+                <CIcon style={{ width: 20, height: 20 }} />
+                <VisuallyHidden>Chatbot</VisuallyHidden>
               </Button>
             </Flex>
           </Box>
@@ -246,32 +266,6 @@ function LinkedInIcon({
   );
 }
 
-function GlobeIcon({
-  className = "",
-  style = {},
-}: {
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <svg
-      className={className}
-      style={style}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M3 12h18M12 3c3 3.5 3 14.5 0 18-3-3.5-3-14.5 0-18z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 function BlogBIcon({
   className = "",
   style = {},
@@ -295,6 +289,45 @@ function BlogBIcon({
         fontFamily="Arial, sans-serif"
       >
         B
+      </text>
+      <rect
+        x="2"
+        y="2"
+        width="20"
+        height="20"
+        rx="4"
+        ry="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+function CIcon({
+  className = "",
+  style = {},
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <svg
+      className={className}
+      style={style}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <text
+        x="6.5"
+        y="17"
+        fontSize="14"
+        fontWeight="bold"
+        fontFamily="Arial, sans-serif"
+      >
+        C
       </text>
       <rect
         x="2"

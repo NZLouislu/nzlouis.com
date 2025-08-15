@@ -1,19 +1,22 @@
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
+import type { Metadata } from "next";
+import ClientLayout from "./ClientLayout";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Louis Lu — AI Engineer",
   description: "Full-stack + ML engineer — Hugging Face in production",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        <Theme accentColor="purple" grayColor="auto" radius="large" scaling="100%">
-          {children}
-        </Theme>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
