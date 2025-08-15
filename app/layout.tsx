@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Louis Lu — AI Engineer",
+  title: "NZLouis — AI | ML Engineer",
   description: "Full-stack + ML engineer — Hugging Face in production",
 };
 

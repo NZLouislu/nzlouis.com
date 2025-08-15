@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# [nzlouis](https://nzlouis.com)
 
-## Getting Started
+Personal portfolio and professional hub of **Louis Lu** — Full‑stack Software Engineer & AI/ML Specialist with 10+ years’ experience delivering production‑ready AI systems for real‑world business impact.
 
-First, run the development server:
+Built with **Next.js App Router**, deployed on **Vercel**, and designed for instant recruiter scanability and high‑conversion personal branding.
+
+---
+
+## 🚀 Getting Started
+
+Clone the repo and install dependencies:
 
 ```bash
-npm run dev
+npm install
 # or
-yarn dev
+yarn install
 # or
-pnpm dev
+pnpm install
 # or
-bun dev
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npm run dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# or
 
-## Learn More
+yarn dev
 
-To learn more about Next.js, take a look at the following resources:
+# or
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+pnpm dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# or
 
-## Deploy on Vercel
+bun dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Open http://localhost:3000 in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🛠 Tech Stack
+• Framework: Next.js 14+ App Router
+• Styling & UI: Tailwind CSS, Radix UI
+• Fonts: Geist via
+• Deployment: Vercel
+• Integrations: Botpress chatbot (SSR‑safe), analytics, SEO meta optimization
+
+📂 Project Structure
+• — App Router pages, layouts, and metadata
+• — Reusable UI components
+• — Static assets (favicons, images, manifest)
+• — Global styles and Tailwind config
+
+📦 Deployment
+This site is deployed on Vercel for global edge delivery.
+Push to → auto‑deploy to production.
+
+📚 Learn More
+• Next.js Documentation — Features & API
+• Learn Next.js — Interactive tutorial
+
+© 2025 NZLouis | Louis Lu. All rights reserved.
