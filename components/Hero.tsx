@@ -67,9 +67,14 @@ export default function Hero() {
               }}
             >
               Full-stack Developer · AI Engineer
-              <Text aria-hidden="true" style={{ opacity: 0.5 }}>
+              <Text
+                aria-hidden="true"
+                className="hidden md:inline"
+                style={{ opacity: 0.5 }}
+              >
                 •
               </Text>
+              <br className="md:hidden" />
               Hugging Face in production
             </Flex>
 
