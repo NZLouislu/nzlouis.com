@@ -141,7 +141,7 @@ export default function Contact() {
                 }}
               >
                 <Link
-                  href="https://github.com/ailouislu"
+                  href="https://github.com/nzlouislu"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub - Louis Lu"
