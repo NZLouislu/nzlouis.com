@@ -7,11 +7,19 @@ import Image from "next/image";
 
 const projects = [
   {
-    title: "Cognitiv Website",
-    desc: "Corporate site built with React, styled-components, and API integration.",
-    stack: ["React", "Styled-Components", "API"],
-    img: "/portfolio/team.jpg",
-    link: "https://cognitiv.co.nz",
+    title: "NZLouis AI Quiz",
+    desc: "Next.js quiz platform using open‑source, Gemini AI and Hugging Face for quiz generation, topic suggestions, and 'Ask AI' assistance, with cost‑optimized multi‑model routing.",
+    stack: [
+      "Next.js",
+      "React",
+      "Styled‑Components",
+      "Open‑Source AI Models",
+      "Gemini AI",
+      "Hugging Face",
+      "API Integration",
+    ],
+    img: "/portfolio/nzlouis-ai-quiz.jpg",
+    link: "https://quiz.nzlouis.com",
   },
   {
     title: "Online Books System",
@@ -137,11 +145,11 @@ export default function Portfolio() {
                     src={p.img}
                     alt={p.title}
                     width={800}
-                    height={660}
+                    height={760}
                     style={{
                       objectFit: "cover",
                       width: "100%",
-                      height: "220px",
+                      height: "240px",
                       display: "block",
                     }}
                   />
