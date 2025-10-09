@@ -29,11 +29,11 @@ const projects = [
     link: "https://books.nzlouis.com",
   },
   {
-    title: "Folio Insurance System",
-    desc: "Secure online insurance platform with user dashboards and payment integration.",
-    stack: ["React", "Next.js", "Stripe API"],
-    img: "/portfolio/folio.jpg",
-    link: "/https://www.folio.insure",
+    title: "github-projects-md-sync",
+    desc: "An npm package that syncs GitHub projects into Markdown files, reaching hundreds of downloads within its first day.",
+    stack: ["Node.js", "npm", "Open Source"],
+    img: "/portfolio/github-projects-md-sync.png",
+    link: "https://www.npmjs.com/package/github-projects-md-sync",
   },
   {
     title: "Peer Evaluation System",
@@ -141,18 +141,17 @@ export default function Portfolio() {
             >
               <Inset clip="padding-box">
                 <Link href={p.link} target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    width={800}
-                    height={760}
-                    style={{
-                      objectFit: "cover",
-                      width: "100%",
-                      height: "240px",
-                      display: "block",
-                    }}
-                  />
+                  <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
+                    <Image
+                      src={p.img}
+                      alt={p.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      style={{
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
                 </Link>
               </Inset>
 
