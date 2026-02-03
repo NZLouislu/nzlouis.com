@@ -32,7 +32,7 @@ export default function About() {
               mb="6"
               className="text-slate-900"
             >
-              Hi, I&apos;m Louis Lu – NZLouis is my personal brand
+              Hi, I{"'"}m Louis Lu – NZLouis is my personal brand
             </Heading>
 
             <Box
@@ -107,7 +107,7 @@ export default function About() {
                 Profile
               </Heading>
               <Text as="p" size="3" className="leading-relaxed">
-                I bring a unique blend of <strong className="text-slate-900 font-bold">corporate rigor</strong> and <strong className="text-slate-900 font-bold">start-up agility</strong>. Having engineered complex financial platforms and high-stakes government systems, I apply the same standards of scalability, security, and performance to modern AI and 3D spatial experiences. Whether it&apos;s 24/7 banking services or 3D digital twins, I build for production.
+                I bring a unique blend of <strong className="text-slate-900 font-bold">corporate rigor</strong> and <strong className="text-slate-900 font-bold">start-up agility</strong>. Having engineered complex financial platforms and high-stakes government systems, I apply the same standards of scalability, security, and performance to modern AI and 3D spatial experiences. Whether it{"'"}s 24/7 banking services or 3D digital twins, I build for production.
               </Text>
 
               <ul className="mt-6 space-y-3">
@@ -130,7 +130,7 @@ export default function About() {
                   {
                     title: "Global Context:",
                     content:
-                      "Seasoned in both the high-velocity China tech scene and NZ&apos;s quality-focused enterprise landscape.",
+                      "Seasoned in both the high-velocity China tech scene and NZ's quality-focused enterprise landscape.",
                   },
                 ].map((item, index) => (
                   <li key={index} className="flex gap-3">
