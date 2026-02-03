@@ -70,7 +70,7 @@ const Bar = ({ value, color, delay, label }: { value: number, color: string, del
 }
 
 export const PropertyStatsVideo = () => {
-    const frame = useCurrentFrame();
+    // const frame = useCurrentFrame();
 
     return (
         <AbsoluteFill style={{
@@ -79,7 +79,7 @@ export const PropertyStatsVideo = () => {
             alignItems: 'center',
             paddingTop: '100px'
         }}>
-            <Title title="Auckland Property Prediction" />
+            <Title title="New Zealand Property Prediction" />
 
             <div style={{
                 display: 'flex',

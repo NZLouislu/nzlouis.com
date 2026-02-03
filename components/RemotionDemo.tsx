@@ -49,8 +49,8 @@ export default function RemotionDemo() {
                                 compositionHeight={720}
                                 fps={30}
                                 controls
-                                autoPlay
                                 loop
+                                acknowledgeRemotionLicense
                                 style={{
                                     width: "100%",
                                     aspectRatio: "16/9",

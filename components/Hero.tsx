@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Heading, Text, Button, Container } from "@radix-ui/themes";
+import { Box, Flex, Heading, Text, Button } from "@radix-ui/themes";
 import Link from "next/link";
 import { useChat } from "@/app/ChatProvider";
 import dynamic from "next/dynamic";
@@ -22,21 +22,26 @@ export default function Hero() {
         background: "linear-gradient(to bottom, #f8fafc, #e2e8f0)",
         paddingTop: "4rem",
         paddingBottom: "4rem",
+        width: "100%",
+        maxWidth: "100vw",
+        overflow: "hidden",
       }}
     >
-      <Container size="4" px="6">
+      <div className="max-w-6xl mx-auto px-5 md:px-6 w-full">
         <Flex
           direction="column"
           align="center"
-          gap="8"
-          style={{ textAlign: "center" }}
+          justify="center"
+          gap="4"
+          className="text-center"
         >
           {/* Top Section: Text Content */}
           <Flex
             direction="column"
             align="center"
             gap="5"
-            style={{ maxWidth: "900px" }}
+            style={{ maxWidth: "800px" }}
+            className="flex-1 w-full"
           >
             {/* Tagline Badge */}
             <Flex
@@ -61,18 +66,20 @@ export default function Hero() {
             {/* Main Heading */}
             <Heading
               as="h1"
-              size={{ initial: "8", md: "9" }}
+              size={{ initial: "6", sm: "8", md: "9" }}
               weight="bold"
-              className="tracking-tight text-pretty"
+              className="tracking-tight w-full"
               style={{
                 lineHeight: 1.1,
                 background:
                   "linear-gradient(135deg, #1e293b 0%, #1554F3 50%, #3b82f6 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                overflowWrap: "anywhere",
+                maxWidth: "100%",
               }}
             >
-              Building the Future with <br />
+              Building the Future with <br className="hidden md:block" />
               AI & 3D Technologies
             </Heading>
 
@@ -157,20 +164,18 @@ export default function Hero() {
           </Flex>
 
           {/* Bottom Section: 3D Scene */}
-          <Box
+          <div
             style={{
-              height: "500px",
               width: "100%",
-              maxWidth: "1000px",
+              maxWidth: "100%",
               position: "relative",
-              //   borderRadius: "24px",
-              //   overflow: "hidden",
+              marginTop: "-2rem",
             }}
           >
             <HeroScene />
-          </Box>
+          </div>
         </Flex>
-      </Container>
+      </div>
     </Box>
   );
 }

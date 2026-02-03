@@ -43,11 +43,7 @@ export default function About() {
               }}
             >
               <Text as="p" size="3" color="gray" style={{ lineHeight: 1.7 }}>
-                A full-stack Software Engineer & AI specialist with 10+ years of
-                experience delivering efficient, scalable systems across
-                industries. I bridge software engineering and applied machine
-                learning, from project planning to coding, testing, deployment,
-                and ongoing optimization.
+                A Senior Software Engineer with <strong className="text-slate-900 font-bold">10+ years of global experience</strong> delivering mission-critical systems across Banking, Insurance, and Government sectors in both <strong className="text-slate-900 font-bold">China and New Zealand</strong>. I bridge the gap between <strong className="text-slate-900 font-bold">enterprise-grade stability</strong> and futuristic innovation in <strong className="text-slate-900 font-bold">AI, 3D, and Virtual Robotics</strong>.
               </Text>
             </Box>
           </Box>
@@ -84,16 +80,16 @@ export default function About() {
                   Louis Lu
                 </Heading>
                 <Text as="p" size="3" className="text-slate-600 mt-1">
-                  Full-Stack Developer & AI / ML Engineer
+                  Full-Stack Developer | AI & 3D Specialist | Virtual Robotics
                 </Text>
                 <div className="mt-4 flex flex-wrap gap-2 justify-center">
                   {[
-                    "React",
+                    "React / Next.js",
+                    "Java / Spring Boot",
                     "Python",
-                    "FastAPI",
-                    "MLflow",
+                    "Three.js",
                     "Hugging Face",
-                    "Java & Spring Boot",
+                    "Isaac Sim",
                   ].map((tech) => (
                     <span
                       key={tech}
@@ -111,34 +107,30 @@ export default function About() {
                 Profile
               </Heading>
               <Text as="p" size="3" className="leading-relaxed">
-                I blend full-stack development with machine learning: end-to-end
-                training, MLOps, and deploying inference services. I’ve shipped
-                FastAPI services wrapping Hugging Face models, built telemetry
-                for drift and performance monitoring, and delivered clean web
-                UIs that make model outputs actionable for product teams.
+                I bring a unique blend of <strong className="text-slate-900 font-bold">corporate rigor</strong> and <strong className="text-slate-900 font-bold">start-up agility</strong>. Having engineered complex financial platforms and high-stakes government systems, I apply the same standards of scalability, security, and performance to modern AI and 3D spatial experiences. Whether it's 24/7 banking services or 3D digital twins, I build for production.
               </Text>
 
               <ul className="mt-6 space-y-3">
                 {[
                   {
-                    title: "Impact:",
+                    title: "Real Estate AI:",
                     content:
-                      "Reduced inference latency and infra cost with quantization, batching, and autoscaling; aligned metrics with product KPIs.",
+                      "Developing predictive models for the New Zealand property market, leveraging machine learning to forecast trends and property values.",
                   },
                   {
-                    title: "MLOps:",
+                    title: "3D Digital Twins:",
                     content:
-                      "CI/CD pipelines, containerized deployments, observability (logs, traces, model metrics) for reliable releases.",
+                      "Building interactive 3D property showcases that allow users to virtually explore real estate with game-like immersion.",
                   },
                   {
-                    title: "UX:",
+                    title: "Full-Stack Mastery:",
                     content:
-                      "Built data-aware UIs so non-ML stakeholders can evaluate outputs, compare versions, and give feedback quickly.",
+                      "10+ years scaling enterprise apps in Banking and Gov, ensuring AI/3D tools meet production-grade standards.",
                   },
                   {
-                    title: "Domains:",
+                    title: "Global Context:",
                     content:
-                      "Real estate, banking, insurance, and equities—prioritizing reliability, compliance, and measurable value.",
+                      "Seasoned in both the high-velocity China tech scene and NZ's quality-focused enterprise landscape.",
                   },
                 ].map((item, index) => (
                   <li key={index} className="flex gap-3">

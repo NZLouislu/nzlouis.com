@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Stars } from "@react-three/drei";
 import { Group, Mesh } from "three";
@@ -8,17 +8,17 @@ import { Group, Mesh } from "three";
 /**
  * The Central Star (Source of Energy)
  */
-function SunNode() {
+function SunNode({ scale = 1 }: { scale?: number }) {
     return (
         <mesh>
-            <sphereGeometry args={[1.2, 32, 32]} />
+            <sphereGeometry args={[1.1 * scale, 32, 32]} />
             <meshStandardMaterial
-                color="#fbbf24" // Amber-400
-                emissive="#f59e0b" // Amber-500
+                color="#fbbf24"
+                emissive="#f59e0b"
                 emissiveIntensity={2}
                 toneMapped={false}
             />
-            <pointLight intensity={3} distance={15} decay={2} color="#fbbf24" />
+            <pointLight intensity={3} distance={20 * scale} decay={2} color="#fbbf24" />
         </mesh>
     );
 }
@@ -30,7 +30,7 @@ function SunNode() {
  * The Dyson Structure (Technological Shell)
  * Consisting of a Swarm (Collectors) and a Transmission Grid.
  */
-function DysonShell() {
+function DysonShell({ scale = 1 }: { scale?: number }) {
     const outerRef = useRef<Mesh>(null);
     const swarmRef = useRef<Mesh>(null);
     const beamRef = useRef<Mesh>(null);
@@ -41,11 +41,9 @@ function DysonShell() {
             outerRef.current.rotation.z += delta * 0.01;
         }
         if (swarmRef.current) {
-            // The main collector swarm rotates with the star
             swarmRef.current.rotation.y -= delta * 0.05;
         }
         if (beamRef.current) {
-            // The transmission ring rotates on a different axis to scan/beam energy
             beamRef.current.rotation.x += delta * 0.2;
             beamRef.current.rotation.y += delta * 0.2;
         }
@@ -55,7 +53,7 @@ function DysonShell() {
         <group>
             {/* 1. Outer Geodesic Frame - The Construction Scaffolding */}
             <mesh ref={outerRef}>
-                <icosahedronGeometry args={[2.2, 1]} />
+                <icosahedronGeometry args={[2.0 * scale, 1]} />
                 <meshStandardMaterial
                     color="#3b82f6"
                     emissive="#1e3a8a"
@@ -68,10 +66,9 @@ function DysonShell() {
 
             {/* 2. Equatorial Ring: The Solar Collector Swarm (Energy Intake) */}
             <mesh ref={swarmRef} rotation={[Math.PI / 2, 0, 0]}>
-                {/* A flattened ring/band representing millions of satellites */}
-                <torusGeometry args={[1.5, 0.02, 16, 100]} />
+                <torusGeometry args={[1.4 * scale, 0.02 * scale, 16, 100]} />
                 <meshStandardMaterial
-                    color="#fbbf24" // Solar panel gold/amber
+                    color="#fbbf24"
                     emissive="#fbbf24"
                     emissiveIntensity={0.8}
                 />
@@ -79,17 +76,15 @@ function DysonShell() {
 
             {/* 3. Inclined Ring: The Power Transmission Field (Energy Output) */}
             <mesh ref={beamRef} rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-                {/* A thin, glowing plasma beam ring */}
-                <torusGeometry args={[1.7, 0.01, 16, 100]} />
+                <torusGeometry args={[1.7 * scale, 0.01 * scale, 16, 100]} />
                 <meshStandardMaterial
-                    color="#60a5fa" // Energy Blue
+                    color="#60a5fa"
                     emissive="#3b82f6"
                     emissiveIntensity={2}
                 />
             </mesh>
         </group>
     );
-
 }
 
 /**
@@ -177,25 +172,44 @@ function Moon({
 }
 
 export default function HeroScene() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    const containerHeight = isMobile ? '450px' : '650px';
+    const cameraFov = isMobile ? 90 : 40;
+    const mobileScale = isMobile ? 0.85 : 1.0;
+
     return (
-        <div className="w-full h-full min-h-[500px]">
-            <Canvas camera={{ position: [0, 2, 9], fov: 50 }}>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[0, 0, 0]} intensity={2} color="#fbbf24" distance={20} decay={2} />
+        <div style={{ width: '100%', height: containerHeight, position: 'relative', overflow: 'visible' }}>
+            <Canvas
+                camera={{ position: [0, 9, 15], fov: cameraFov, near: 0.1, far: 1000 }}
+                style={{ width: '100%', height: '100%', touchAction: 'none' }}
+                gl={{ antialias: true, alpha: true }}
+            >
+                <ambientLight intensity={0.6} />
+                <pointLight position={[0, 0, 0]} intensity={3} color="#fbbf24" distance={25} decay={2} />
 
                 {/* The Solar System Core with Dyson Structure */}
                 <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
-                    <SunNode />
-                    <DysonShell />
+                    <SunNode scale={mobileScale} />
+                    <DysonShell scale={mobileScale} />
                 </Float>
 
                 {/* Earth System: Deep Ocean Blue + Moon */}
-                <Planet distance={4.2} speed={0.3} radius={0.35} color="#1d4ed8">
-                    <Moon distance={0.7} speed={1.5} radius={0.1} />
+                <Planet distance={4.4 * mobileScale} speed={0.3} radius={0.35 * mobileScale} color="#1d4ed8">
+                    <Moon distance={0.7 * mobileScale} speed={1.5} radius={0.08 * mobileScale} />
                 </Planet>
 
                 {/* Mars System: Rusty Red Planet */}
-                <Planet distance={6.0} speed={0.2} radius={0.28} color="#c2410c" />
+                <Planet distance={6.6 * mobileScale} speed={0.2} radius={0.28 * mobileScale} color="#c2410c" />
 
                 {/* Background Stars */}
                 <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
