@@ -12,13 +12,19 @@
     "@botpress/webchat": "^3.2.0",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/themes": "^3.2.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@remotion/player": "^4.0.417",
+    "@types/three": "^0.182.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.539.0",
     "next": "^15.4.8",
     "radix-ui": "^1.4.2",
     "react": "^19.1.2",
     "react-dom": "^19.1.2",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "remotion": "^4.0.417",
+    "three": "^0.182.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

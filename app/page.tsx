@@ -8,6 +8,7 @@ import Blog from "../components/Blog";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import RemotionDemo from "../components/RemotionDemo";
 
 export default function Page() {
   return (
@@ -25,6 +26,7 @@ export default function Page() {
         <Hero />
         <About />
         <Portfolio />
+        <RemotionDemo />
         <Skills />
         <Contact />
         <Blog />

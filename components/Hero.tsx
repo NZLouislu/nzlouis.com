@@ -3,122 +3,171 @@
 import { Box, Flex, Heading, Text, Button, Container } from "@radix-ui/themes";
 import Link from "next/link";
 import { useChat } from "@/app/ChatProvider";
+import dynamic from "next/dynamic";
+
+// Dynamically import the 3D scene to avoid SSR issues with WebGL
+const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false });
 
 export default function Hero() {
   const { open, toggleChat } = useChat();
 
   return (
-    <Box id="home" position="relative">
-      <Container
-        size="4"
-        position="relative"
-        px="6"
-        py={{ initial: "6", md: "8" }}
-      >
+    <Box
+      id="home"
+      style={{
+        minHeight: "80vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(to bottom, #f8fafc, #e2e8f0)",
+        paddingTop: "4rem",
+        paddingBottom: "4rem",
+      }}
+    >
+      <Container size="4" px="6">
         <Flex
           direction="column"
           align="center"
-          gap="5"
+          gap="8"
           style={{ textAlign: "center" }}
         >
-          <Box width="100%" maxWidth="800px">
+          {/* Top Section: Text Content */}
+          <Flex
+            direction="column"
+            align="center"
+            gap="5"
+            style={{ maxWidth: "900px" }}
+          >
+            {/* Tagline Badge */}
             <Flex
               align="center"
               justify="center"
               gap="2"
               px="3"
               py="1"
-              mb="4"
               style={{
                 borderRadius: "9999px",
-                backgroundColor: "transparent",
+                backgroundColor: "rgba(21, 84, 243, 0.1)",
                 color: "#1554F3",
-                fontSize: "1rem",
-                fontWeight: 500,
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                width: "fit-content",
+                border: "1px solid rgba(21, 84, 243, 0.2)",
               }}
             >
               NZLouis · Personal brand of Louis Lu
             </Flex>
 
+            {/* Main Heading */}
             <Heading
               as="h1"
-              size={{ initial: "7", md: "9" }}
+              size={{ initial: "8", md: "9" }}
               weight="bold"
-              mb="4"
               className="tracking-tight text-pretty"
-              style={{ lineHeight: 1.3 }}
+              style={{
+                lineHeight: 1.1,
+                background:
+                  "linear-gradient(135deg, #1e293b 0%, #1554F3 50%, #3b82f6 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
-              I build AI-powered systems for real-world impact
+              Building the Future with <br />
+              AI & 3D Technologies
             </Heading>
 
+            {/* Subtitles / Roles */}
             <Flex
               align="center"
               justify="center"
-              gap="2"
-              px="3"
-              py="1"
-              mb="4"
+              gap="3"
+              wrap="wrap"
               style={{
-                borderRadius: "9999px",
-                backgroundColor: "transparent",
-                color: "#1554F3",
-                fontSize: "1rem",
+                fontSize: "1.1rem",
                 fontWeight: 500,
+                color: "#475569",
               }}
             >
-              Full-stack Developer · AI Engineer
-              <Text
-                aria-hidden="true"
-                className="hidden md:inline"
-                style={{ opacity: 0.5 }}
-              >
-                •
-              </Text>
-              <br className="md:hidden" />
-              Hugging Face in production
+              <Text>Full-stack Developer</Text>
+              <Text style={{ color: "#cbd5e1" }}>•</Text>
+              <Text>AI Expert</Text>
+              <Text style={{ color: "#cbd5e1" }}>•</Text>
+              <Text>3D & Robotics</Text>
             </Flex>
 
-            <Text as="p" size="3" mb="6" style={{ lineHeight: 1.6 }}>
-              End-to-end AI systems built with Hugging Face, RAG, and vector
-              search. Delivered through full-stack pipelines using FastAPI,
-              Docker, observability, and scalable architecture.
+            {/* Description */}
+            <Text
+              as="p"
+              size="4"
+              style={{
+                lineHeight: 1.6,
+                color: "#334155",
+                maxWidth: "600px",
+              }}
+            >
+              Crafting immersive digital experiences and intelligent systems.
+              Specializing in Hugging Face, RAG pipelines, and interactive 3D web applications.
             </Text>
 
-            <Flex justify="center" wrap="wrap" gap="3" mb="6">
+            {/* CTA Buttons */}
+            <Flex justify="center" wrap="wrap" gap="3" mt="2">
               <Button
                 asChild
                 size="3"
+                variant="outline"
                 style={{
-                  border: "1px solid #3B82F6",
-                  color: "#3B82F6",
-                  backgroundColor: "transparent",
+                  borderColor: "#3B82F6",
+                  color: "#2563eb",
+                  backgroundColor: "white",
+                  cursor: "pointer",
                 }}
               >
                 <Link href="#portfolio" aria-label="portfolio">
-                  View portfolio
+                  View Projects
                 </Link>
               </Button>
 
               <Button
                 asChild
                 size="3"
-                style={{ backgroundColor: "#1554F3", color: "white" }}
+                style={{
+                  backgroundColor: "#1554F3",
+                  color: "white",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 14px 0 rgba(21, 84, 243, 0.39)",
+                }}
               >
-                <Link href="#about">About me</Link>
+                <Link href="#about">About Me</Link>
               </Button>
 
               <Button
                 size="3"
                 onClick={toggleChat}
+                variant="outline"
                 style={{
-                  border: "1px solid #3B82F6",
-                  color: "#3B82F6",
-                  backgroundColor: "transparent",
+                  borderColor: "#3B82F6",
+                  color: "#2563eb",
+                  backgroundColor: "white",
+                  cursor: "pointer",
                 }}
               >
-                {open ? "Close chat" : "Chat with me"}
+                {open ? "Close Chat" : "Talk to AI"}
               </Button>
             </Flex>
+          </Flex>
+
+          {/* Bottom Section: 3D Scene */}
+          <Box
+            style={{
+              height: "500px",
+              width: "100%",
+              maxWidth: "1000px",
+              position: "relative",
+              //   borderRadius: "24px",
+              //   overflow: "hidden",
+            }}
+          >
+            <HeroScene />
           </Box>
         </Flex>
       </Container>
