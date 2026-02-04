@@ -22,11 +22,11 @@ const projects = [
     link: "https://quiz.nzlouis.com",
   },
   {
-    title: "Online Books System",
-    desc: "Implemented using React and react-bootstrap. Contains functions such as books and authors.",
-    stack: ["React", "Bootstrap", "Node.js"],
-    img: "/portfolio/books.jpg",
-    link: "https://books.nzlouis.com",
+    title: "Shop3D Showcase",
+    desc: "A high-performance 3D product visualization platform using React Three Fiber. Features interactive 3D model exploration with real-time lighting and responsive design for next-gen e-commerce.",
+    stack: ["React", "Three.js", "R3F", "GLSL", "E-commerce"],
+    video: "/video/shop3d-showcase.mp4",
+    link: "https://shop3d.nzlouis.com/",
   },
   {
     title: "github-projects-md-sync",
@@ -50,13 +50,6 @@ const projects = [
     link: "https://example.com/tenei",
   },
   {
-    title: ".NET System: Online Event Registration",
-    desc: "Online registration system for events with email notifications.",
-    stack: [".NET", "C#", "SQL Server"],
-    img: "/portfolio/online.jpg",
-    link: "https://example.com/event",
-  },
-  {
     title: "Louis' Blog",
     desc: "Personal blog to share thoughts and projects.",
     stack: ["Next.js", "Markdown", "Vercel"],
@@ -76,6 +69,13 @@ const projects = [
     stack: ["Node.js", "Express", "OpenAPI"],
     img: "/portfolio/openapi.jpg",
     link: "https://openapi.nzlouis.com",
+  },
+  {
+    title: "Online Books System",
+    desc: "Implemented using React and react-bootstrap. Contains functions such as books and authors.",
+    stack: ["React", "Bootstrap", "Node.js"],
+    img: "/portfolio/books.jpg",
+    link: "https://books.nzlouis.com",
   },
 ];
 
@@ -142,15 +142,33 @@ export default function Portfolio() {
               <Inset clip="padding-box">
                 <Link href={p.link} target="_blank" rel="noopener noreferrer">
                   <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
-                    <Image
-                      src={p.img}
-                      alt={p.title}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                      style={{
-                        objectFit: "cover",
-                      }}
-                    />
+                    {p.video ? (
+                      <video
+                        src={p.video}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        disablePictureInPicture
+                        poster={p.img}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={p.img || "/portfolio/placeholder.jpg"}
+                        alt={p.title}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        style={{
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
                   </div>
                 </Link>
               </Inset>
