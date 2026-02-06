@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { Card, Inset, Text, Heading, Flex, Box, Badge } from "@radix-ui/themes";
+import { Card, Inset, Text, Heading, Flex, Box, Badge, Dialog, IconButton } from "@radix-ui/themes";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Github } from "lucide-react";
+import { Github, Play, X } from "lucide-react";
 
 interface Project {
   title: string;
@@ -84,6 +84,7 @@ function getColumnCount(width: number) {
 
 const ProjectCard = ({ p }: { p: Project }) => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     e.currentTarget.style.transform = "translateY(-8px)";
@@ -102,29 +103,30 @@ const ProjectCard = ({ p }: { p: Project }) => {
   };
 
   return (
-    <Card
-      style={{
-        overflow: "hidden",
-        cursor: "pointer",
-        transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-        height: "100%",
-        border: "1px solid var(--gray-4)",
-        background: "var(--color-panel-solid)",
-      }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Inset clip="padding-box">
-        <Link href={p.link} target="_blank" rel="noopener noreferrer">
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              aspectRatio: "16 / 9",
-              background: "white",
-            }}
-          >
-            {p.video ? (
+    <>
+      <Card
+        style={{
+          overflow: "hidden",
+          cursor: "pointer",
+          transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+          height: "100%",
+          border: "1px solid var(--gray-4)",
+          background: "var(--color-panel-solid)",
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Inset clip="padding-box">
+          {p.video ? (
+            <div
+              onClick={() => setIsOpen(true)}
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 9",
+                background: "black",
+              }}
+            >
               <video
                 ref={videoRef}
                 src={p.video}
@@ -140,58 +142,135 @@ const ProjectCard = ({ p }: { p: Project }) => {
                   padding: p.imgFit === "contain" ? "16px" : "0",
                 }}
               />
-            ) : (
-              <NextImage
-                src={p.img || "/portfolio/placeholder.jpg"}
-                alt={p.title}
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              <div
                 style={{
-                  objectFit: p.imgFit || "cover",
-                  padding: p.imgFit === "contain" ? "16px" : "0",
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "rgba(0,0,0,0.1)",
+                  transition: "background 0.3s",
                 }}
-              />
-            )}
-          </div>
-        </Link>
-      </Inset>
-
-      <Box p="3">
-        <Flex justify="between" align="start" mt="3" mb="2">
-          <Heading size="3" weight="bold">
-            {p.title}
-          </Heading>
-          {p.github && (
-            <Link
-              href={p.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "var(--gray-11)", transition: "color 0.2s" }}
-              onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) =>
-                (e.currentTarget.style.color = "var(--blue-9)")
-              }
-              onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) =>
-                (e.currentTarget.style.color = "var(--gray-11)")
-              }
-            >
-              <Github size={18} />
+              >
+                <div
+                  style={{
+                    background: "rgba(0, 0, 0, 0.3)",
+                    borderRadius: "50%",
+                    padding: "12px",
+                    backdropFilter: "blur(4px)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                  }}
+                >
+                  <Play size={32} fill="white" color="white" style={{ marginLeft: "4px" }} />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Link href={p.link} target="_blank" rel="noopener noreferrer">
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16 / 9",
+                  background: "white",
+                }}
+              >
+                <NextImage
+                  src={p.img || "/portfolio/placeholder.jpg"}
+                  alt={p.title}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  style={{
+                    objectFit: p.imgFit || "cover",
+                    padding: p.imgFit === "contain" ? "16px" : "0",
+                  }}
+                />
+              </div>
             </Link>
           )}
-        </Flex>
+        </Inset>
 
-        <Text as="p" size="2" color="gray">
-          {p.desc}
-        </Text>
+        <Box p="3">
+          <Flex justify="between" align="start" mt="3" mb="2">
+            <Link href={p.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Heading size="3" weight="bold" className="hover:text-blue-600 transition-colors">
+                {p.title}
+              </Heading>
+            </Link>
+            {p.github && (
+              <Link
+                href={p.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--gray-11)", transition: "color 0.2s" }}
+                onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                  (e.currentTarget.style.color = "var(--blue-9)")
+                }
+                onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                  (e.currentTarget.style.color = "var(--gray-11)")
+                }
+              >
+                <Github size={18} />
+              </Link>
+            )}
+          </Flex>
 
-        <Flex gap="2" mt="3" wrap="wrap">
-          {p.stack.map((tech) => (
-            <Badge key={tech} color="blue" variant="soft" size="1">
-              {tech}
-            </Badge>
-          ))}
-        </Flex>
-      </Box>
-    </Card>
+          <Text as="p" size="2" color="gray">
+            {p.desc}
+          </Text>
+
+          <Flex gap="2" mt="3" wrap="wrap">
+            {p.stack.map((tech) => (
+              <Badge key={tech} color="blue" variant="soft" size="1">
+                {tech}
+              </Badge>
+            ))}
+          </Flex>
+        </Box>
+      </Card>
+
+      {p.video && (
+        <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+          <Dialog.Content
+            style={{
+              maxWidth: "1000px",
+              width: "90vw",
+              padding: 0,
+              overflow: "hidden",
+              background: "black",
+              aspectRatio: "16/9"
+            }}
+          >
+            <Box style={{ position: "relative", width: "100%", height: "100%" }}>
+              <video
+                src={p.video}
+                controls
+                autoPlay
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
+              <Dialog.Close>
+                <IconButton
+                  variant="ghost"
+                  color="gray"
+                  highContrast
+                  style={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    background: "rgba(0,0,0,0.5)",
+                    color: "white",
+                    borderRadius: "50%"
+                  }}
+                >
+                  <X size={20} />
+                </IconButton>
+              </Dialog.Close>
+            </Box>
+          </Dialog.Content>
+        </Dialog.Root>
+      )}
+    </>
   );
 };
 
