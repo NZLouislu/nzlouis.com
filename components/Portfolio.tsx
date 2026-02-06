@@ -3,9 +3,30 @@
 import React from "react";
 import { Card, Inset, Text, Heading, Flex, Box, Badge } from "@radix-ui/themes";
 import Link from "next/link";
-import Image from "next/image";
+import NextImage from "next/image";
+import { Github } from "lucide-react";
 
-const projects = [
+interface Project {
+  title: string;
+  desc: string;
+  stack: string[];
+  link: string;
+  img?: string;
+  video?: string;
+  github?: string;
+  imgFit?: "contain" | "cover";
+}
+
+const projects: Project[] = [
+  {
+    title: "SmartTour 3D",
+    desc: "An immersive Real Estate Digital Twin platform combining React 18 and Physics for a game-like roaming experience. Featuring programmatic cinematography, it turns 3D spatial data into cinematic 4K marketing videos via Remotion.",
+    stack: ["React 18", "Three.js", "Physics", "Remotion", "Digital Twin"],
+    video: "/video/3D-SmartTour-Showcase.mp4",
+    img: "/portfolio/smarttour-poster.png",
+    link: "https://3dhome.nzlouis.com/",
+    github: "https://github.com/NZLouislu/3d-room-roaming",
+  },
   {
     title: "NZLouis AI Quiz",
     desc: "Next.js quiz platform using open‑source, Gemini AI and Hugging Face for quiz generation, topic suggestions, and 'Ask AI' assistance, with cost‑optimized multi‑model routing.",
@@ -26,7 +47,10 @@ const projects = [
     desc: "A high-performance 3D product visualization platform using React Three Fiber. Features interactive 3D model exploration with real-time lighting and responsive design for next-gen e-commerce.",
     stack: ["React", "Three.js", "R3F", "GLSL", "E-commerce"],
     video: "/video/shop3d-showcase.mp4",
+    img: "/portfolio/shop3d-poster.png",
+    imgFit: "contain",
     link: "https://shop3d.nzlouis.com/",
+    github: "https://github.com/NZLouislu/Shop3D",
   },
   {
     title: "github-projects-md-sync",
@@ -34,48 +58,21 @@ const projects = [
     stack: ["Node.js", "npm", "Open Source"],
     img: "/portfolio/github-projects-md-sync.png",
     link: "https://www.npmjs.com/package/github-projects-md-sync",
+    github: "https://github.com/NZLouislu/github-projects-md-sync",
   },
   {
-    title: "Peer Evaluation System",
-    desc: "Evaluate peers online with scoring standards, reports, and data analysis.",
-    stack: ["React", "Express", "MongoDB"],
-    img: "/portfolio/peer.jpg",
-    link: "https://peer.nzlouis.com",
-  },
-  {
-    title: "Tenei Job Hunting for Maori",
-    desc: "Platform connecting Maori job seekers with employers, highlighting skills.",
-    stack: ["React", "Node.js", "Postgres"],
-    img: "/portfolio/tenei.jpg",
-    link: "https://example.com/tenei",
-  },
-  {
-    title: "Louis' Blog",
-    desc: "Personal blog to share thoughts and projects.",
-    stack: ["Next.js", "Markdown", "Vercel"],
-    img: "/portfolio/blog.jpg",
-    link: "https://blog.nzlouis.com",
-  },
-  {
-    title: "Internet Financial Analysis System",
-    desc: "Financial market analysis with charts, predictions, and reports.",
-    stack: ["Python", "Django", "ECharts"],
+    title: "Property Prediction System",
+    desc: "Advanced Big Data analysis and AI modeling for Auckland & Wellington property markets. Provides precise sales predictions and market trend visualizations.",
+    stack: ["Big Data", "AI Modeling", "Data Viz", "Next.js", "Supabase"],
     img: "/portfolio/ibank.jpg",
-    link: "https://example.com/finance",
+    link: "#",
   },
   {
-    title: "OpenAPI System",
-    desc: "API service with Swagger documentation and authentication.",
-    stack: ["Node.js", "Express", "OpenAPI"],
-    img: "/portfolio/openapi.jpg",
-    link: "https://openapi.nzlouis.com",
-  },
-  {
-    title: "Online Books System",
-    desc: "Implemented using React and react-bootstrap. Contains functions such as books and authors.",
-    stack: ["React", "Bootstrap", "Node.js"],
-    img: "/portfolio/books.jpg",
-    link: "https://books.nzlouis.com",
+    title: "3D Robotics Simulation",
+    desc: "High-fidelity simulation environments for robotics development and AI agent training, emphasizing realistic physics and sensor data.",
+    stack: ["Gazebo", "Unity", "Physics", "Robotics", "3D Modeling"],
+    img: "/portfolio/peer.jpg",
+    link: "#",
   },
 ];
 
@@ -84,6 +81,119 @@ function getColumnCount(width: number) {
   if (width >= 768) return 2;
   return 1;
 }
+
+const ProjectCard = ({ p }: { p: Project }) => {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.transform = "translateY(-8px)";
+    e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.12)";
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => { });
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.transform = "translateY(0)";
+    e.currentTarget.style.boxShadow = "none";
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  return (
+    <Card
+      style={{
+        overflow: "hidden",
+        cursor: "pointer",
+        transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+        height: "100%",
+        border: "1px solid var(--gray-4)",
+        background: "var(--color-panel-solid)",
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Inset clip="padding-box">
+        <Link href={p.link} target="_blank" rel="noopener noreferrer">
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              aspectRatio: "16 / 9",
+              background: "white",
+            }}
+          >
+            {p.video ? (
+              <video
+                ref={videoRef}
+                src={p.video}
+                loop
+                muted
+                playsInline
+                preload="auto"
+                poster={p.img}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: p.imgFit || "cover",
+                  padding: p.imgFit === "contain" ? "16px" : "0",
+                }}
+              />
+            ) : (
+              <NextImage
+                src={p.img || "/portfolio/placeholder.jpg"}
+                alt={p.title}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                style={{
+                  objectFit: p.imgFit || "cover",
+                  padding: p.imgFit === "contain" ? "16px" : "0",
+                }}
+              />
+            )}
+          </div>
+        </Link>
+      </Inset>
+
+      <Box p="3">
+        <Flex justify="between" align="start" mt="3" mb="2">
+          <Heading size="3" weight="bold">
+            {p.title}
+          </Heading>
+          {p.github && (
+            <Link
+              href={p.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--gray-11)", transition: "color 0.2s" }}
+              onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                (e.currentTarget.style.color = "var(--blue-9)")
+              }
+              onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                (e.currentTarget.style.color = "var(--gray-11)")
+              }
+            >
+              <Github size={18} />
+            </Link>
+          )}
+        </Flex>
+
+        <Text as="p" size="2" color="gray">
+          {p.desc}
+        </Text>
+
+        <Flex gap="2" mt="3" wrap="wrap">
+          {p.stack.map((tech) => (
+            <Badge key={tech} color="blue" variant="soft" size="1">
+              {tech}
+            </Badge>
+          ))}
+        </Flex>
+      </Box>
+    </Card>
+  );
+};
 
 export default function Portfolio() {
   const [cols, setCols] = React.useState(1);
@@ -98,13 +208,18 @@ export default function Portfolio() {
   return (
     <Box id="portfolio" px="5" py="8" style={{ width: "100%" }}>
       <Heading
-        size="6"
+        size="8"
         weight="bold"
         align="center"
-        mb="6"
-        style={{ color: "blue" }}
+        mb="8"
+        style={{
+          background: "linear-gradient(to right, #2563eb, #7c3aed)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          letterSpacing: "-0.02em",
+        }}
       >
-        PORTFOLIO
+        FEATURED PROJECTS
       </Heading>
 
       <Box
@@ -117,80 +232,12 @@ export default function Portfolio() {
           style={{
             display: "grid",
             gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-            gap: "20px",
+            gap: "24px",
             alignItems: "stretch",
           }}
         >
           {projects.map((p) => (
-            <Card
-              key={p.title}
-              style={{
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "transform 0.2s ease, boxShadow 0.2s ease",
-                height: "100%",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <Inset clip="padding-box">
-                <Link href={p.link} target="_blank" rel="noopener noreferrer">
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
-                    {p.video ? (
-                      <video
-                        src={p.video}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        disablePictureInPicture
-                        poster={p.img}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        src={p.img || "/portfolio/placeholder.jpg"}
-                        alt={p.title}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        style={{
-                          objectFit: "cover",
-                        }}
-                      />
-                    )}
-                  </div>
-                </Link>
-              </Inset>
-
-              <Box p="3">
-                <Heading mt="3" size="3" weight="bold" mb="2">
-                  {p.title}
-                </Heading>
-
-                <Text as="p" size="2" color="gray">
-                  {p.desc}
-                </Text>
-
-                <Flex gap="2" mt="3" wrap="wrap">
-                  {p.stack.map((tech) => (
-                    <Badge key={tech} color="blue" variant="soft" size="1">
-                      {tech}
-                    </Badge>
-                  ))}
-                </Flex>
-              </Box>
-            </Card>
+            <ProjectCard key={p.title} p={p} />
           ))}
         </Box>
       </Box>
