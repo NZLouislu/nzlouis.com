@@ -22,7 +22,7 @@ const projects: Project[] = [
     title: "SmartTour 3D",
     desc: "An immersive Real Estate Digital Twin platform combining React 18 and Physics for a game-like roaming experience. Featuring programmatic cinematography, it turns 3D spatial data into cinematic 4K marketing videos via Remotion.",
     stack: ["React 18", "Three.js", "Physics", "Remotion", "Digital Twin"],
-    video: "/video/3D-SmartTour-Showcase.mp4",
+    // video: "/video/3D-SmartTour-Showcase.mp4",
     img: "/portfolio/smarttour-poster.png",
     link: "https://3dhome.nzlouis.com/",
     github: "https://github.com/NZLouislu/3d-room-roaming",
