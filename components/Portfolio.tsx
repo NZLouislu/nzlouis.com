@@ -84,6 +84,7 @@ function getColumnCount(width: number) {
 
 const ProjectCard = ({ p }: { p: Project }) => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -136,6 +137,8 @@ const ProjectCard = ({ p }: { p: Project }) => {
                 autoPlay
                 preload="auto"
                 poster={p.img}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -151,7 +154,9 @@ const ProjectCard = ({ p }: { p: Project }) => {
                   alignItems: "center",
                   justifyContent: "center",
                   background: "rgba(0,0,0,0.1)",
-                  transition: "background 0.3s",
+                  opacity: isPlaying ? 0 : 1,
+                  pointerEvents: "none",
+                  transition: "opacity 0.3s ease-in-out",
                 }}
               >
                 <div
