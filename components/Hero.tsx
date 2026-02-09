@@ -6,7 +6,7 @@ import { useChat } from "@/app/ChatProvider";
 import dynamic from "next/dynamic";
 
 // Dynamically import the 3D scene to avoid SSR issues with WebGL
-const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false });
+const FutureSolarScene = dynamic(() => import("./FutureSolarScene"), { ssr: false });
 
 export default function Hero() {
   const { open, toggleChat } = useChat();
@@ -163,17 +163,32 @@ export default function Hero() {
             </Flex>
           </Flex>
 
-          {/* Bottom Section: 3D Scene */}
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "100%",
-              position: "relative",
-              marginTop: "-2rem",
-            }}
-          >
-            <HeroScene />
-          </div>
+          {/* Bottom Section: 3D Scenes */}
+          <Flex direction="column" gap="8" style={{ width: "100%", position: "relative" }}>
+            {/* 1st Scene: Hidden as requested
+            <div
+              style={{
+                width: "100%",
+                maxWidth: "100%",
+                position: "relative",
+                marginTop: "-2rem",
+              }}
+            >
+              <HeroScene />
+            </div>
+            */}
+
+            <div
+              style={{
+                width: "100%",
+                maxWidth: "100%",
+                position: "relative",
+                marginTop: "-1rem",
+              }}
+            >
+              <FutureSolarScene />
+            </div>
+          </Flex>
         </Flex>
       </div>
     </Box>

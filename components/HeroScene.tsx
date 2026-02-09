@@ -9,8 +9,17 @@ import { Group, Mesh } from "three";
  * The Central Star (Source of Energy)
  */
 function SunNode({ scale = 1 }: { scale?: number }) {
+    const meshRef = useRef<Mesh>(null);
+
+    useFrame((state, delta) => {
+        if (meshRef.current) {
+            // Sun's differential rotation (simplified to a single mean angular velocity)
+            meshRef.current.rotation.y += delta * 0.15;
+        }
+    });
+
     return (
-        <mesh>
+        <mesh ref={meshRef}>
             <sphereGeometry args={[1.1 * scale, 32, 32]} />
             <meshStandardMaterial
                 color="#fbbf24"
@@ -183,12 +192,28 @@ export default function HeroScene() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    const containerHeight = isMobile ? '450px' : '650px';
-    const cameraFov = isMobile ? 90 : 40;
+    const containerHeight = isMobile ? '500px' : '800px';
+    const cameraFov = isMobile ? 90 : 35;
     const mobileScale = isMobile ? 0.85 : 1.0;
 
     return (
-        <div style={{ width: '100%', height: containerHeight, position: 'relative', overflow: 'visible' }}>
+        <div style={{
+            width: '100%',
+            height: containerHeight,
+            position: 'relative',
+            background: 'rgba(255, 255, 255, 0.4)',
+            borderRadius: '32px',
+            border: '1px solid rgba(0,0,0,0.05)',
+            marginTop: '2rem',
+            overflow: 'hidden'
+        }}>
+            <div style={{ position: 'absolute', top: '32px', left: 0, right: 0, textAlign: 'center', pointerEvents: 'none', zIndex: 1, padding: '0 20px' }}>
+                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#1e293b' }}>Modern Dyson Swarm</h3>
+                <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: '#64748b' }}>
+                    Hyper-scale energy infrastructure for a Type II Civilization.
+                </p>
+            </div>
+
             <Canvas
                 camera={{ position: [0, 9, 15], fov: cameraFov, near: 0.1, far: 1000 }}
                 style={{ width: '100%', height: '100%', touchAction: 'none' }}
@@ -199,17 +224,17 @@ export default function HeroScene() {
 
                 {/* The Solar System Core with Dyson Structure */}
                 <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
-                    <SunNode scale={mobileScale} />
-                    <DysonShell scale={mobileScale} />
+                    <SunNode scale={mobileScale * 1.1} />
+                    <DysonShell scale={mobileScale * 1.1} />
                 </Float>
 
                 {/* Earth System: Deep Ocean Blue + Moon */}
-                <Planet distance={4.4 * mobileScale} speed={0.3} radius={0.35 * mobileScale} color="#1d4ed8">
-                    <Moon distance={0.7 * mobileScale} speed={1.5} radius={0.08 * mobileScale} />
+                <Planet distance={5.0 * mobileScale} speed={0.3} radius={0.4 * mobileScale} color="#1d4ed8">
+                    <Moon distance={0.75 * mobileScale} speed={1.5} radius={0.1 * mobileScale} />
                 </Planet>
 
                 {/* Mars System: Rusty Red Planet */}
-                <Planet distance={6.6 * mobileScale} speed={0.2} radius={0.28 * mobileScale} color="#c2410c" />
+                <Planet distance={8.0 * mobileScale} speed={0.2} radius={0.3 * mobileScale} color="#c2410c" />
 
                 {/* Background Stars */}
                 <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
