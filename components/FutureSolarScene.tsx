@@ -387,7 +387,7 @@ export default function FutureSolarScene() {
 
             <div style={{
                 position: 'absolute',
-                bottom: '24px',
+                bottom: isMobile ? '40px' : '64px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 padding: '8px 24px',
