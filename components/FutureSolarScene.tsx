@@ -307,7 +307,7 @@ export default function FutureSolarScene() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    const containerHeight = isMobile ? '580px' : '750px';
+    const containerHeight = isMobile ? '640px' : '820px';
     const cameraFov = isMobile ? 75 : 50;
     const mobileScale = isMobile ? 1.2 : 1.4;
     const cameraZ = isMobile ? 17 : 18;
@@ -335,7 +335,7 @@ export default function FutureSolarScene() {
             </div>
 
             <Canvas
-                camera={{ position: [0, 10, cameraZ], fov: cameraFov, near: 0.1, far: 1000 }}
+                camera={{ position: [0, 8.5, cameraZ], fov: cameraFov, near: 0.1, far: 1000 }}
                 style={{ width: '100%', height: '100%', touchAction: 'none' }}
                 gl={{ antialias: true, alpha: true }}
             >
