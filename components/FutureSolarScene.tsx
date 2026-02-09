@@ -307,18 +307,22 @@ export default function FutureSolarScene() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    const containerHeight = isMobile ? '500px' : '750px';
-    const cameraFov = isMobile ? 80 : 38;
-    const mobileScale = isMobile ? 0.8 : 1.0;
+    const containerHeight = isMobile ? '580px' : '750px';
+    const cameraFov = isMobile ? 75 : 38;
+    const mobileScale = isMobile ? 1.2 : 1.0;
+    const cameraZ = isMobile ? 17 : 20;
 
     return (
         <div style={{
-            width: '100%',
+            width: isMobile ? 'calc(100% + 2rem)' : '100%',
             height: containerHeight,
             position: 'relative',
             background: 'rgba(255, 255, 255, 0.4)',
-            borderRadius: '32px',
-            border: '1px solid rgba(0,0,0,0.05)',
+            borderRadius: isMobile ? '0' : '32px',
+            marginInline: isMobile ? '-1rem' : '0',
+            border: isMobile ? 'none' : '1px solid rgba(0,0,0,0.05)',
+            borderTop: isMobile ? '1px solid rgba(0,0,0,0.05)' : 'none',
+            borderBottom: isMobile ? '1px solid rgba(0,0,0,0.05)' : 'none',
             marginTop: '2rem',
             overflow: 'hidden'
         }}>
@@ -331,7 +335,7 @@ export default function FutureSolarScene() {
             </div>
 
             <Canvas
-                camera={{ position: [0, 10, 20], fov: cameraFov, near: 0.1, far: 1000 }}
+                camera={{ position: [0, 10, cameraZ], fov: cameraFov, near: 0.1, far: 1000 }}
                 style={{ width: '100%', height: '100%', touchAction: 'none' }}
                 gl={{ antialias: true, alpha: true }}
             >
