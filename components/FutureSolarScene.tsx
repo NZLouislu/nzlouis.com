@@ -308,9 +308,9 @@ export default function FutureSolarScene() {
     }, []);
 
     const containerHeight = isMobile ? '580px' : '750px';
-    const cameraFov = isMobile ? 75 : 38;
-    const mobileScale = isMobile ? 1.2 : 1.0;
-    const cameraZ = isMobile ? 17 : 20;
+    const cameraFov = isMobile ? 75 : 50;
+    const mobileScale = isMobile ? 1.2 : 1.4;
+    const cameraZ = isMobile ? 17 : 18;
 
     return (
         <div style={{
