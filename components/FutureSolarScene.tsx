@@ -5,7 +5,11 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars, Float } from "@react-three/drei";
 import { Group, Mesh, Vector3, DoubleSide, QuadraticBezierCurve3 } from "three";
 
-function SunNode({ scale = 1 }: { scale?: number }) {
+interface SunNodeProps {
+    scale?: number;
+}
+
+function SunNode({ scale = 1 }: SunNodeProps) {
     const meshRef = useRef<Mesh>(null);
     useFrame((state, delta) => {
         if (meshRef.current) {
@@ -25,7 +29,12 @@ function SunNode({ scale = 1 }: { scale?: number }) {
     );
 }
 
-function Sunshade({ earthPos, scale = 1 }: { earthPos: Vector3, scale?: number }) {
+interface SunshadeProps {
+    earthPos: Vector3;
+    scale?: number;
+}
+
+function Sunshade({ earthPos, scale = 1 }: SunshadeProps) {
     const meshRef = useRef<Mesh>(null);
     useFrame(() => {
         if (meshRef.current && earthPos.length() > 0) {
@@ -51,15 +60,21 @@ function Sunshade({ earthPos, scale = 1 }: { earthPos: Vector3, scale?: number }
     );
 }
 
+interface StarshipProps {
+    fromPosRef: React.MutableRefObject<Vector3>;
+    toPosRef: React.MutableRefObject<Vector3>;
+    trigger: boolean;
+    scale?: number;
+    color?: string;
+}
+
 function InterplanetaryStarship({
     fromPosRef,
     toPosRef,
     trigger,
     scale = 1,
-    color = "#e2e8f0",
-    targetPlanetDistance,
-    targetPlanetSpeed
-}: any) {
+    color = "#e2e8f0"
+}: StarshipProps) {
     const groupRef = useRef<Group>(null);
     const [missionState, setMissionState] = useState<'IDLE' | 'TRANSIT' | 'COOLDOWN'>('IDLE');
     const [progress, setProgress] = useState(0);
@@ -136,6 +151,16 @@ function InterplanetaryStarship({
     );
 }
 
+interface PlanetProps {
+    radius: number;
+    distance: number;
+    speed: number;
+    color: string;
+    onUpdate?: (pos: Vector3) => void;
+    initialAngle?: number;
+    hasMoon?: boolean;
+}
+
 function Planet({
     radius,
     distance,
@@ -144,7 +169,7 @@ function Planet({
     onUpdate,
     initialAngle = 0,
     hasMoon = false
-}: any) {
+}: PlanetProps) {
     const pivotRef = useRef<Group>(null);
     const meshRef = useRef<Mesh>(null);
     const moonPivotRef = useRef<Group>(null);
@@ -193,12 +218,24 @@ function Planet({
     );
 }
 
+interface StatusType {
+    text: string;
+    color: string;
+}
+
+interface ControllerProps {
+    earthPos: React.MutableRefObject<Vector3>;
+    marsPos: React.MutableRefObject<Vector3>;
+    mobileScale: number;
+    setMissionStatus: (status: StatusType) => void;
+}
+
 function SimulationController({
     earthPos,
     marsPos,
     mobileScale,
     setMissionStatus
-}: any) {
+}: ControllerProps) {
     const [earthToMarsTrigger, setEarthToMarsTrigger] = useState(false);
     const [marsToEarthTrigger, setMarsToEarthTrigger] = useState(false);
     const [isTransiting, setIsTransiting] = useState(false);
@@ -245,8 +282,6 @@ function SimulationController({
                 trigger={earthToMarsTrigger}
                 scale={mobileScale}
                 color="#ffffff"
-                targetPlanetDistance={8.0 * mobileScale}
-                targetPlanetSpeed={0.2}
             />
             <InterplanetaryStarship
                 fromPosRef={marsPos}
@@ -254,8 +289,6 @@ function SimulationController({
                 trigger={marsToEarthTrigger}
                 scale={mobileScale}
                 color="#94a3b8"
-                targetPlanetDistance={5.0 * mobileScale}
-                targetPlanetSpeed={0.3}
             />
         </>
     );
@@ -263,7 +296,7 @@ function SimulationController({
 
 export default function FutureSolarScene() {
     const [isMobile, setIsMobile] = useState(false);
-    const [missionStatus, setMissionStatus] = useState({ text: "INITIALIZING", color: "#64748b" });
+    const [missionStatus, setMissionStatus] = useState<StatusType>({ text: "INITIALIZING", color: "#64748b" });
     const earthPos = useRef(new Vector3());
     const marsPos = useRef(new Vector3());
 
@@ -312,7 +345,7 @@ export default function FutureSolarScene() {
                     initialAngle={0}
                     color="#2563eb"
                     hasMoon={true}
-                    onUpdate={(p: any) => earthPos.current.copy(p)}
+                    onUpdate={(p: Vector3) => earthPos.current.copy(p)}
                 />
                 <Planet
                     radius={0.3 * mobileScale}
@@ -320,7 +353,7 @@ export default function FutureSolarScene() {
                     speed={0.2}
                     initialAngle={1.2}
                     color="#dc2626"
-                    onUpdate={(p: any) => marsPos.current.copy(p)}
+                    onUpdate={(p: Vector3) => marsPos.current.copy(p)}
                 />
                 <SimulationController
                     earthPos={earthPos}
