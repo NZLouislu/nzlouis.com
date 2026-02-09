@@ -5,19 +5,13 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars, Float } from "@react-three/drei";
 import { Group, Mesh, Vector3, DoubleSide, QuadraticBezierCurve3 } from "three";
 
-/**
- * The Central Sun Node
- */
 function SunNode({ scale = 1 }: { scale?: number }) {
     const meshRef = useRef<Mesh>(null);
-
     useFrame((state, delta) => {
         if (meshRef.current) {
-            // Mean solar rotation velocity
             meshRef.current.rotation.y += delta * 0.15;
         }
     });
-
     return (
         <mesh ref={meshRef}>
             <sphereGeometry args={[1.1 * scale, 32, 32]} />
@@ -31,13 +25,8 @@ function SunNode({ scale = 1 }: { scale?: number }) {
     );
 }
 
-/**
- * Sunshade component at L1
- * Dynamically tracks the Earth-Sun line
- */
 function Sunshade({ earthPos, scale = 1 }: { earthPos: Vector3, scale?: number }) {
     const meshRef = useRef<Mesh>(null);
-
     useFrame(() => {
         if (meshRef.current && earthPos.length() > 0) {
             const targetPos = earthPos.clone().multiplyScalar(0.72);
@@ -45,7 +34,6 @@ function Sunshade({ earthPos, scale = 1 }: { earthPos: Vector3, scale?: number }
             meshRef.current.lookAt(0, 0, 0);
         }
     });
-
     return (
         <mesh ref={meshRef}>
             <circleGeometry args={[0.4 * scale, 32]} />
@@ -63,10 +51,6 @@ function Sunshade({ earthPos, scale = 1 }: { earthPos: Vector3, scale?: number }
     );
 }
 
-/**
- * Advanced Interplanetary Starship
- * Uses Hohmann Transfer logic (Simplified for visualization)
- */
 function InterplanetaryStarship({
     fromPosRef,
     toPosRef,
@@ -75,22 +59,13 @@ function InterplanetaryStarship({
     color = "#e2e8f0",
     targetPlanetDistance,
     targetPlanetSpeed
-}: {
-    fromPosRef: React.MutableRefObject<Vector3>,
-    toPosRef: React.MutableRefObject<Vector3>,
-    trigger: boolean,
-    scale?: number,
-    color?: string,
-    targetPlanetDistance: number,
-    targetPlanetSpeed: number
-}) {
+}: any) {
     const groupRef = useRef<Group>(null);
     const [missionState, setMissionState] = useState<'IDLE' | 'TRANSIT' | 'COOLDOWN'>('IDLE');
     const [progress, setProgress] = useState(0);
-    const transitDuration = 6.0;
+    const transitDuration = 5.0;
 
     const startPos = useRef(new Vector3());
-    const predictedEndPos = useRef(new Vector3());
     const controlPoint = useRef(new Vector3());
 
     useFrame((state, delta) => {
@@ -100,30 +75,15 @@ function InterplanetaryStarship({
                 groupRef.current.visible = false;
             }
             if (trigger) {
-                // 1. Predict where the planet will be after transitDuration
-                const currentAngle = Math.atan2(toPosRef.current.z, toPosRef.current.x);
-                const leadAngle = targetPlanetSpeed * transitDuration;
-                const predictedAngle = currentAngle + leadAngle;
-
-                predictedEndPos.current.set(
-                    Math.cos(predictedAngle) * targetPlanetDistance,
-                    0,
-                    Math.sin(predictedAngle) * targetPlanetDistance
-                );
-
                 startPos.current.copy(fromPosRef.current);
-
-                // 2. STABLE Angular Outward-Arcking Control Point
-                // Note: We'll still use a predicted mid-angle for the apex calculation, 
-                // but the end point of the curve will follow the planet in real-time.
                 const angleStart = Math.atan2(startPos.current.z, startPos.current.x);
-                const angleEndInitial = Math.atan2(toPosRef.current.z, toPosRef.current.x);
-                let diff = angleEndInitial - angleStart;
+                const angleEnd = Math.atan2(toPosRef.current.z, toPosRef.current.x);
+                let diff = angleEnd - angleStart;
                 while (diff < -Math.PI) diff += 2 * Math.PI;
                 while (diff > Math.PI) diff -= 2 * Math.PI;
                 const midAngle = angleStart + diff * 0.5;
 
-                const maxRadius = Math.max(startPos.current.length(), 8.0 * scale); // Use max orbital radius
+                const maxRadius = Math.max(startPos.current.length(), 8.0 * scale);
                 const apexRadius = maxRadius + 3.0 * scale;
 
                 controlPoint.current.set(
@@ -138,25 +98,21 @@ function InterplanetaryStarship({
         } else if (missionState === 'TRANSIT') {
             if (groupRef.current) {
                 groupRef.current.visible = true;
-
                 const newProgress = Math.min(progress + delta / transitDuration, 1);
                 setProgress(newProgress);
 
-                // Smooth non-linear movement
                 const t = 1 - Math.pow(1 - newProgress, 2);
-
-                // REAL-TIME TRACKING: The end point of the curve is the CURRENT planet position
                 const curve = new QuadraticBezierCurve3(startPos.current, controlPoint.current, toPosRef.current);
                 const pos = curve.getPoint(t);
                 groupRef.current.position.copy(pos);
 
-                // Heading estimation
                 const nextPos = curve.getPoint(Math.min(t + 0.01, 1));
                 groupRef.current.lookAt(nextPos);
+                groupRef.current.rotateX(Math.PI / 2);
 
                 if (newProgress >= 1) {
                     setMissionState('COOLDOWN');
-                    setTimeout(() => setMissionState('IDLE'), 3000);
+                    setTimeout(() => setMissionState('IDLE'), 2500);
                 }
             }
         } else {
@@ -180,28 +136,25 @@ function InterplanetaryStarship({
     );
 }
 
-/**
- * Standardized Planet Component
- */
 function Planet({
     radius,
     distance,
     speed,
     color,
     onUpdate,
+    initialAngle = 0,
     hasMoon = false
-}: {
-    radius: number,
-    distance: number,
-    speed: number,
-    color: string,
-    onUpdate?: (pos: Vector3) => void,
-    hasMoon?: boolean
-}) {
+}: any) {
     const pivotRef = useRef<Group>(null);
     const meshRef = useRef<Mesh>(null);
     const moonPivotRef = useRef<Group>(null);
     const pos = new Vector3();
+
+    useEffect(() => {
+        if (pivotRef.current) {
+            pivotRef.current.rotation.y = initialAngle;
+        }
+    }, [initialAngle]);
 
     useFrame((state, delta) => {
         if (pivotRef.current) {
@@ -223,7 +176,6 @@ function Planet({
                     <sphereGeometry args={[radius, 32, 32]} />
                     <meshStandardMaterial color={color} roughness={0.7} metalness={0.2} />
                 </mesh>
-
                 {hasMoon && (
                     <group ref={moonPivotRef}>
                         <mesh position={[radius + 0.5, 0, 0]}>
@@ -233,7 +185,6 @@ function Planet({
                     </group>
                 )}
             </group>
-
             <mesh rotation={[Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[distance - 0.02, distance + 0.02, 64]} />
                 <meshBasicMaterial color={color} opacity={0.1} transparent side={DoubleSide} />
@@ -242,49 +193,46 @@ function Planet({
     );
 }
 
-/**
- * Scientific Simulation Controller
- */
 function SimulationController({
     earthPos,
     marsPos,
-    mobileScale
-}: {
-    earthPos: React.MutableRefObject<Vector3>,
-    marsPos: React.MutableRefObject<Vector3>,
-    mobileScale: number
-}) {
+    mobileScale,
+    setMissionStatus
+}: any) {
     const [earthToMarsTrigger, setEarthToMarsTrigger] = useState(false);
     const [marsToEarthTrigger, setMarsToEarthTrigger] = useState(false);
-    const lastE2MLaunch = useRef(0);
-    const lastM2ELaunch = useRef(0);
+    const [isTransiting, setIsTransiting] = useState(false);
+    const lastE2MLaunch = useRef(-100);
+    const lastM2ELaunch = useRef(-100);
 
     useFrame((state) => {
         const time = state.clock.getElapsedTime();
         const angleEarth = Math.atan2(earthPos.current.z, earthPos.current.x);
         const angleMars = Math.atan2(marsPos.current.z, marsPos.current.x);
 
-        // Relative phase angles for Hohmann Transfer
         let phaseDiff = angleMars - angleEarth;
         while (phaseDiff < 0) phaseDiff += 2 * Math.PI;
         while (phaseDiff > 2 * Math.PI) phaseDiff -= 2 * Math.PI;
 
-        // Launch Window A: Earth -> Mars
-        // Optimal: Mars leads Earth by ~45 degrees (0.78 rad)
         const isE2MWindow = Math.abs(phaseDiff - 0.78) < 0.2;
-        if (isE2MWindow && time - lastE2MLaunch.current > 25) {
-            setEarthToMarsTrigger(true);
-            lastE2MLaunch.current = time;
-            setTimeout(() => setEarthToMarsTrigger(false), 200);
-        }
+        const isM2EWindow = Math.abs(phaseDiff - (2 * Math.PI - 0.77)) < 0.2;
 
-        // Launch Window B: Mars -> Earth 
-        // Optimal: Earth behind Mars by ~75 degrees (Simplified)
-        const isM2EWindow = Math.abs(phaseDiff - (2 * Math.PI - 1.3)) < 0.2;
-        if (isM2EWindow && time - lastM2ELaunch.current > 25) {
-            setMarsToEarthTrigger(true);
-            lastM2ELaunch.current = time;
-            setTimeout(() => setMarsToEarthTrigger(false), 200);
+        if (isE2MWindow || isM2EWindow || isTransiting) {
+            setMissionStatus({ text: "LAUNCH WINDOW OPEN", color: "#16a34a" });
+
+            if (isE2MWindow && time - lastE2MLaunch.current > 15) {
+                setEarthToMarsTrigger(true);
+                setIsTransiting(true);
+                lastE2MLaunch.current = time;
+                setTimeout(() => { setEarthToMarsTrigger(false); setIsTransiting(false); }, 6000);
+            } else if (isM2EWindow && time - lastM2ELaunch.current > 15) {
+                setMarsToEarthTrigger(true);
+                setIsTransiting(true);
+                lastM2ELaunch.current = time;
+                setTimeout(() => { setMarsToEarthTrigger(false); setIsTransiting(false); }, 6000);
+            }
+        } else {
+            setMissionStatus({ text: "WAITING FOR WINDOW", color: "#dc2626" });
         }
     });
 
@@ -315,6 +263,7 @@ function SimulationController({
 
 export default function FutureSolarScene() {
     const [isMobile, setIsMobile] = useState(false);
+    const [missionStatus, setMissionStatus] = useState({ text: "INITIALIZING", color: "#64748b" });
     const earthPos = useRef(new Vector3());
     const marsPos = useRef(new Vector3());
 
@@ -355,30 +304,52 @@ export default function FutureSolarScene() {
             >
                 <ambientLight intensity={0.6} />
                 <pointLight position={[0, 0, 0]} intensity={4} color="#fbbf24" distance={30} decay={2} />
-
                 <SunNode scale={mobileScale * 1.1} />
-
                 <Planet
                     radius={0.4 * mobileScale}
                     distance={5.0 * mobileScale}
                     speed={0.3}
+                    initialAngle={0}
                     color="#2563eb"
                     hasMoon={true}
-                    onUpdate={(p) => earthPos.current.copy(p)}
+                    onUpdate={(p: any) => earthPos.current.copy(p)}
                 />
-
                 <Planet
                     radius={0.3 * mobileScale}
                     distance={8.0 * mobileScale}
                     speed={0.2}
+                    initialAngle={1.2}
                     color="#dc2626"
-                    onUpdate={(p) => marsPos.current.copy(p)}
+                    onUpdate={(p: any) => marsPos.current.copy(p)}
                 />
-
-                <SimulationController earthPos={earthPos} marsPos={marsPos} mobileScale={mobileScale} />
-
+                <SimulationController
+                    earthPos={earthPos}
+                    marsPos={marsPos}
+                    mobileScale={mobileScale}
+                    setMissionStatus={setMissionStatus}
+                />
                 <Stars radius={120} depth={50} count={2000} factor={4} saturation={0} fade speed={0.5} />
             </Canvas>
+
+            <div style={{
+                position: 'absolute',
+                bottom: '24px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                padding: '8px 24px',
+                background: 'rgba(255, 255, 255, 0.9)',
+                borderRadius: '99px',
+                border: '1px solid rgba(0,0,0,0.1)',
+                color: missionStatus.color,
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                letterSpacing: '0.05em',
+                backdropFilter: 'blur(8px)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                transition: 'color 0.3s ease'
+            }}>
+                {missionStatus.text}
+            </div>
         </div>
     );
 }
