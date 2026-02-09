@@ -297,29 +297,46 @@ function SimulationController({
 export default function FutureSolarScene() {
     const [isMobile, setIsMobile] = useState(false);
     const [missionStatus, setMissionStatus] = useState<StatusType>({ text: "INITIALIZING", color: "#64748b" });
+    const [isTablet, setIsTablet] = useState(false);
     const earthPos = useRef(new Vector3());
     const marsPos = useRef(new Vector3());
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
+        const handleResize = () => {
+            const width = window.innerWidth;
+            setIsMobile(width < 768);
+            setIsTablet(width >= 768 && width < 1024);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const containerHeight = isMobile ? '640px' : '820px';
-    const cameraFov = isMobile ? 75 : 50;
-    const mobileScale = isMobile ? 1.2 : 1.4;
-    const cameraZ = isMobile ? 17 : 18;
+    const containerHeight = isMobile ? '640px' : '850px';
+
+    // Dynamic Responsive Parameters
+    let cameraFov = 42;
+    let mobileScale = 1.4;
+    let cameraZ = 28;
+
+    if (isMobile) {
+        cameraFov = 82;
+        mobileScale = 1.2;
+        cameraZ = 20;
+    } else if (isTablet) {
+        cameraFov = 52;
+        mobileScale = 1.2;
+        cameraZ = 30;
+    }
 
     return (
         <div style={{
-            width: isMobile ? 'calc(100% + 2rem)' : '100%',
+            width: isMobile ? 'calc(100% + 2.5rem)' : '100%',
             height: containerHeight,
             position: 'relative',
             background: 'rgba(255, 255, 255, 0.4)',
             borderRadius: isMobile ? '0' : '32px',
-            marginInline: isMobile ? '-1rem' : '0',
+            marginInline: isMobile ? '-1.25rem' : '0',
             border: isMobile ? 'none' : '1px solid rgba(0,0,0,0.05)',
             borderTop: isMobile ? '1px solid rgba(0,0,0,0.05)' : 'none',
             borderBottom: isMobile ? '1px solid rgba(0,0,0,0.05)' : 'none',
