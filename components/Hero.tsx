@@ -113,7 +113,8 @@ export default function Hero() {
               }}
             >
               Crafting immersive digital experiences and intelligent systems.
-              Specializing in Hugging Face, RAG pipelines, and interactive 3D web applications.
+              Specializing in AI pipelines, interactive 3D web applications,
+              and interplanetary transport simulation.
             </Text>
 
             {/* CTA Buttons */}

@@ -48,13 +48,15 @@ function Sunshade({ earthPos, scale = 1 }: { earthPos: Vector3, scale?: number }
 
     return (
         <mesh ref={meshRef}>
-            <circleGeometry args={[0.45 * scale, 32]} />
+            <circleGeometry args={[0.4 * scale, 32]} />
             <meshStandardMaterial
-                color="#fbbf24"
+                color="#334155"
+                emissive="#94a3b8"
+                emissiveIntensity={0.2}
                 metalness={1}
-                roughness={0.1}
+                roughness={0.2}
                 transparent
-                opacity={0.6}
+                opacity={0.5}
                 side={DoubleSide}
             />
         </mesh>
@@ -70,20 +72,25 @@ function InterplanetaryStarship({
     toPosRef,
     trigger,
     scale = 1,
-    color = "#e2e8f0"
+    color = "#e2e8f0",
+    targetPlanetDistance,
+    targetPlanetSpeed
 }: {
     fromPosRef: React.MutableRefObject<Vector3>,
     toPosRef: React.MutableRefObject<Vector3>,
     trigger: boolean,
     scale?: number,
-    color?: string
+    color?: string,
+    targetPlanetDistance: number,
+    targetPlanetSpeed: number
 }) {
     const groupRef = useRef<Group>(null);
     const [missionState, setMissionState] = useState<'IDLE' | 'TRANSIT' | 'COOLDOWN'>('IDLE');
     const [progress, setProgress] = useState(0);
+    const transitDuration = 6.0;
 
     const startPos = useRef(new Vector3());
-    const endPos = useRef(new Vector3());
+    const predictedEndPos = useRef(new Vector3());
     const controlPoint = useRef(new Vector3());
 
     useFrame((state, delta) => {
@@ -93,16 +100,37 @@ function InterplanetaryStarship({
                 groupRef.current.visible = false;
             }
             if (trigger) {
+                // 1. Predict where the planet will be after transitDuration
+                const currentAngle = Math.atan2(toPosRef.current.z, toPosRef.current.x);
+                const leadAngle = targetPlanetSpeed * transitDuration;
+                const predictedAngle = currentAngle + leadAngle;
+
+                predictedEndPos.current.set(
+                    Math.cos(predictedAngle) * targetPlanetDistance,
+                    0,
+                    Math.sin(predictedAngle) * targetPlanetDistance
+                );
+
                 startPos.current.copy(fromPosRef.current);
-                endPos.current.copy(toPosRef.current);
 
-                // Efficient Trajectory: A subtler arc that avoids the Sun
-                // without creating a huge detour.
-                const mid = new Vector3().addVectors(startPos.current, endPos.current).multiplyScalar(0.5);
+                // 2. STABLE Angular Outward-Arcking Control Point
+                // Note: We'll still use a predicted mid-angle for the apex calculation, 
+                // but the end point of the curve will follow the planet in real-time.
+                const angleStart = Math.atan2(startPos.current.z, startPos.current.x);
+                const angleEndInitial = Math.atan2(toPosRef.current.z, toPosRef.current.x);
+                let diff = angleEndInitial - angleStart;
+                while (diff < -Math.PI) diff += 2 * Math.PI;
+                while (diff > Math.PI) diff -= 2 * Math.PI;
+                const midAngle = angleStart + diff * 0.5;
 
-                // Push control point out just enough to clear the Sun (approx 2 units)
-                // plus a bit of height for the 'Artemis jump' look
-                controlPoint.current.copy(mid).normalize().multiplyScalar(mid.length() + 2 * scale).add(new Vector3(0, 1.5 * scale, 0));
+                const maxRadius = Math.max(startPos.current.length(), 8.0 * scale); // Use max orbital radius
+                const apexRadius = maxRadius + 3.0 * scale;
+
+                controlPoint.current.set(
+                    Math.cos(midAngle) * apexRadius,
+                    2.0 * scale,
+                    Math.sin(midAngle) * apexRadius
+                );
 
                 setMissionState('TRANSIT');
                 setProgress(0);
@@ -111,24 +139,24 @@ function InterplanetaryStarship({
             if (groupRef.current) {
                 groupRef.current.visible = true;
 
-                // Slightly faster transit (6s instead of 8s) for more 'action'
-                const newProgress = Math.min(progress + delta / 6, 1);
+                const newProgress = Math.min(progress + delta / transitDuration, 1);
                 setProgress(newProgress);
 
-                // Target moves while we are in transit!
-                endPos.current.copy(toPosRef.current);
+                // Smooth non-linear movement
+                const t = 1 - Math.pow(1 - newProgress, 2);
 
-                const curve = new QuadraticBezierCurve3(startPos.current, controlPoint.current, endPos.current);
-                const pos = curve.getPoint(newProgress);
+                // REAL-TIME TRACKING: The end point of the curve is the CURRENT planet position
+                const curve = new QuadraticBezierCurve3(startPos.current, controlPoint.current, toPosRef.current);
+                const pos = curve.getPoint(t);
                 groupRef.current.position.copy(pos);
 
-                // Align ship nose to flight path
-                const nextPos = curve.getPoint(Math.min(newProgress + 0.01, 1));
+                // Heading estimation
+                const nextPos = curve.getPoint(Math.min(t + 0.01, 1));
                 groupRef.current.lookAt(nextPos);
 
                 if (newProgress >= 1) {
                     setMissionState('COOLDOWN');
-                    setTimeout(() => setMissionState('IDLE'), 2500); // Shorter pause
+                    setTimeout(() => setMissionState('IDLE'), 3000);
                 }
             }
         } else {
@@ -146,7 +174,7 @@ function InterplanetaryStarship({
                     <cylinderGeometry args={[0.04 * scale, 0.04 * scale, 0.25 * scale, 12]} />
                     <meshStandardMaterial color={color} metalness={0.9} roughness={0.1} />
                 </mesh>
-                <pointLight color="#fb923c" intensity={2} distance={1.5} />
+                <pointLight color="#fb923c" intensity={missionState === 'TRANSIT' ? 5 : 0} distance={2} />
             </Float>
         </group>
     );
@@ -263,8 +291,24 @@ function SimulationController({
     return (
         <>
             <Sunshade earthPos={earthPos.current} scale={mobileScale} />
-            <InterplanetaryStarship fromPosRef={earthPos} toPosRef={marsPos} trigger={earthToMarsTrigger} scale={mobileScale} color="#ffffff" />
-            <InterplanetaryStarship fromPosRef={marsPos} toPosRef={earthPos} trigger={marsToEarthTrigger} scale={mobileScale} color="#cbd5e1" />
+            <InterplanetaryStarship
+                fromPosRef={earthPos}
+                toPosRef={marsPos}
+                trigger={earthToMarsTrigger}
+                scale={mobileScale}
+                color="#ffffff"
+                targetPlanetDistance={8.0 * mobileScale}
+                targetPlanetSpeed={0.2}
+            />
+            <InterplanetaryStarship
+                fromPosRef={marsPos}
+                toPosRef={earthPos}
+                trigger={marsToEarthTrigger}
+                scale={mobileScale}
+                color="#94a3b8"
+                targetPlanetDistance={5.0 * mobileScale}
+                targetPlanetSpeed={0.3}
+            />
         </>
     );
 }
@@ -297,9 +341,10 @@ export default function FutureSolarScene() {
             overflow: 'hidden'
         }}>
             <div style={{ position: 'absolute', top: '32px', left: 0, right: 0, textAlign: 'center', pointerEvents: 'none', zIndex: 1, padding: '0 20px' }}>
-                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#1e293b' }}>Interplanetary Future</h3>
-                <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: '#64748b' }}>
-                    Scientific Hohmann Transfer Logic. Earth Protection via L1 Sunshade.
+                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#1e293b' }}>Hohmann Transfer Orbit & Planetary Sunshade</h3>
+                <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: '#64748b', maxWidth: '500px', marginInline: 'auto' }}>
+                    Simulating SpaceX-inspired Starship fleets during optimal Hohmann windows.
+                    Earth climate extension via L1 Lagrangian Sunshade.
                 </p>
             </div>
 
