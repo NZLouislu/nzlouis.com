@@ -19,7 +19,7 @@ const Title = ({ title }: { title: string }) => {
                 width: '100%',
                 opacity,
                 transform: `translateY(${translateY}px)`,
-                color: '#1e293b', // Slate-800
+                color: '#1e293b',
             }}
         >
             {title}
@@ -31,15 +31,13 @@ const Bar = ({ value, color, delay, label }: { value: number, color: string, del
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
 
-    // Spring animation for smooth growth
     const height = spring({
         fps,
         frame: frame - delay,
         config: { damping: 12 },
     });
 
-    // Interpolate spring (0-1) to actual height
-    const actualHeight = interpolate(height, [0, 1], [0, value * 3]); // Scaling factor
+    const actualHeight = interpolate(height, [0, 1], [0, value * 3]);
 
     return (
         <div style={{
@@ -47,7 +45,7 @@ const Bar = ({ value, color, delay, label }: { value: number, color: string, del
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            height: '400px', // Container height
+            height: '400px',
             margin: '0 20px',
         }}>
             <div
@@ -69,17 +67,15 @@ const Bar = ({ value, color, delay, label }: { value: number, color: string, del
     )
 }
 
-export const PropertyStatsVideo = () => {
-    // const frame = useCurrentFrame();
-
+export const AnalyticsVideo = () => {
     return (
         <AbsoluteFill style={{
-            backgroundColor: '#f8fafc', // Slate-50
+            backgroundColor: '#f8fafc',
             justifyContent: 'center',
             alignItems: 'center',
             paddingTop: '100px'
         }}>
-            <Title title="New Zealand Property Prediction" />
+            <Title title="Data Visualization Analytics" />
 
             <div style={{
                 display: 'flex',
@@ -88,10 +84,10 @@ export const PropertyStatsVideo = () => {
                 justifyContent: 'center',
                 marginTop: '100px'
             }}>
-                <Bar value={85} color="#3b82f6" delay={15} label="Sold" />
-                <Bar value={42} color="#ef4444" delay={30} label="Withdrawn" />
-                <Bar value={68} color="#10b981" delay={45} label="New List" />
-                <Bar value={92} color="#f59e0b" delay={60} label="Predicted" />
+                <Bar value={85} color="#3b82f6" delay={15} label="Ingestion" />
+                <Bar value={42} color="#ef4444" delay={30} label="Parsing" />
+                <Bar value={68} color="#10b981" delay={45} label="Indexing" />
+                <Bar value={92} color="#f59e0b" delay={60} label="Rendering" />
             </div>
 
             <div style={{

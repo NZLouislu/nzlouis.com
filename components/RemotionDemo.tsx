@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Player } from "@remotion/player";
-import { PropertyStatsVideo } from "./PropertyStatsVideo";
+import { AnalyticsVideo } from "./AnalyticsVideo";
 import { Box, Heading, Text, Card, Flex } from "@radix-ui/themes";
 
 export default function RemotionDemo() {
@@ -28,7 +28,7 @@ export default function RemotionDemo() {
                     style={{ maxWidth: "700px", margin: "0 auto 2rem auto" }}
                 >
                     This video is not a pre-rendered MP4. It is <strong>rendered dynamically in real-time</strong> using React code (Remotion).
-                    I use this technology to automate weekly property market reports and data visualization.
+                    An open-source exploration of using React (Remotion) for dynamic data visualization pipelines.
                 </Text>
 
                 {mounted ? (
@@ -43,7 +43,7 @@ export default function RemotionDemo() {
                             }}
                         >
                             <Player
-                                component={PropertyStatsVideo}
+                                component={AnalyticsVideo}
                                 durationInFrames={150}
                                 compositionWidth={1280}
                                 compositionHeight={720}

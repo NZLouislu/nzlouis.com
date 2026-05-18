@@ -113,14 +113,14 @@ export default function About() {
               <ul className="mt-6 space-y-3">
                 {[
                   {
-                    title: "Real Estate AI:",
+                    title: "Predictive Modeling:",
                     content:
-                      "Developing predictive models for the New Zealand property market, leveraging machine learning to forecast trends and property values.",
+                      "Developing advanced predictive analytics and machine learning pipelines to forecast trend dynamics on complex datasets.",
                   },
                   {
-                    title: "3D Digital Twins:",
+                    title: "3D Spatial Simulations:",
                     content:
-                      "Building interactive 3D property showcases that allow users to virtually explore real estate with game-like immersion.",
+                      "Building interactive 3D spatial simulations and dynamic virtual environments with high-fidelity, game-like physics and immersion.",
                   },
                   {
                     title: "Full-Stack Mastery:",

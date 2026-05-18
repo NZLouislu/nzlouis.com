@@ -49,8 +49,7 @@ export default function Contact() {
               mb="3"
               style={{ color: "rgba(255,255,255,0.95)" }}
             >
-              Open to remote roles in the US or Australia as an AI / ML /
-              Full-Stack Engineer.
+              Open to professional networking, technical consultancies, or discussing innovative AI/Full-Stack solutions.
             </Text>
 
             <Text
@@ -60,8 +59,7 @@ export default function Contact() {
               mb="5"
               style={{ color: "rgba(255,255,255,0.9)" }}
             >
-              Proven ability to align seamlessly with US and AU business hours
-              from New Zealand.
+              Fully continuous integration and delivery capable across global timezones.
             </Text>
 
             <Flex justify="center" gap="3" mb="4" wrap="wrap">

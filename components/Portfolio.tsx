@@ -15,6 +15,7 @@ interface Project {
   video?: string;
   github?: string;
   imgFit?: "contain" | "cover";
+  hidden?: boolean;
 }
 
 const projects: Project[] = [
@@ -26,6 +27,7 @@ const projects: Project[] = [
     img: "/portfolio/smarttour-poster.png",
     link: "https://3dhome.nzlouis.com/",
     github: "https://github.com/NZLouislu/3d-room-roaming",
+    hidden: true,
   },
   {
     title: "NZLouis AI Quiz",
@@ -66,6 +68,7 @@ const projects: Project[] = [
     stack: ["Big Data", "AI Modeling", "Data Viz", "Next.js", "Supabase"],
     img: "/portfolio/ibank.jpg",
     link: "#",
+    hidden: true,
   },
   {
     title: "3D Robotics Simulation",
@@ -324,7 +327,7 @@ export default function Portfolio() {
             alignItems: "stretch",
           }}
         >
-          {projects.map((p) => (
+          {projects.filter((p) => !p.hidden).map((p) => (
             <ProjectCard key={p.title} p={p} />
           ))}
         </Box>
